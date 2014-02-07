@@ -212,7 +212,11 @@ void vtkImageEMLocalClass::SetPCAEigenVector(vtkImageData *image, int index) {
       vtkEMAddErrorMessage("Error:SetPCAEigenVector: index has to be greater 0 and not greater than NumberOfEigenModes(" << this->PCANumberOfEigenModes << ")");
       return;
     }
+#if (VTK_MAJOR_VERSION <= 5)
     this->SetInput(index+2,image);
+#else
+    this->SetInputData(index+2,image);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -300,15 +304,21 @@ void vtkImageEMLocalClass::ExecuteData(vtkDataObject *)
      return;
    }  
 
-   // Redefine ImageRelatedClass Parameters   
+   // Redefine ImageRelatedClass Parameters
+#if (VTK_MAJOR_VERSION <= 5)
    vtkImageData **inData  = (vtkImageData **) this->GetInputs();
+#endif
 
    // ================================================== 
    // Load the images
  
    // Check if everything is OK with proabability data
    if (NumberOfRealInputData < 2) {
+#if (VTK_MAJOR_VERSION <= 5)
      if (inData[1] == NULL) {
+#else
+     if (this->GetInput(1) == NULL) {
+#endif
        if (this->ProbDataWeight > 0.0) {
      vtkEMAddErrorMessage("ProbDataWeight > 0.0 but no Probability Map defined !" );
      return;
@@ -321,9 +331,14 @@ void vtkImageEMLocalClass::ExecuteData(vtkDataObject *)
    }
    
    // Check and set PCA Mean Shape    
-   if (inData[2]) {
-     
-     if (!this->CheckAndAssignPCAImageData(inData[2], 2)) return;
+#if (VTK_MAJOR_VERSION <= 5)
+     if (inData[2] == NULL) {
+         if (!this->CheckAndAssignPCAImageData(inData[2], 2)) return;
+#else
+    vtkImageData *inData2  = (vtkImageData *) this->GetInput(2);
+     if (inData2 == NULL) {
+         if (!this->CheckAndAssignPCAImageData(inData2, 2)) return;
+#endif
    } else {
      vtkEMAddErrorMessage("PCA Eigen Vectors defined but PCA Mean Shape is missing!");
      return;
@@ -331,8 +346,14 @@ void vtkImageEMLocalClass::ExecuteData(vtkDataObject *)
 
    // Check and Read in Eigenvectors
    for (int j = 0 ; j < this->PCANumberOfEigenModes; j++) {
+#if (VTK_MAJOR_VERSION <= 5)
       if (inData[j+3]) {
     if (!this->CheckAndAssignPCAImageData(inData[j+3], j+3)) return;
+#else
+      vtkImageData *inDataTemp  = (vtkImageData *) this->GetInput(j+3);
+      if (inDataTemp) {
+    if (!this->CheckAndAssignPCAImageData(inDataTemp, j+3)) return;
+#endif
       } else {
     vtkEMAddErrorMessage(j +1 << ". PCA Eigen Vector is not defined !");
     return;

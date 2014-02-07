@@ -24,8 +24,11 @@
 // ------------------------------------
 #ifndef __vtkImageEMGeneral_h
 #define __vtkImageEMGeneral_h
+#include <vtkDataObject.h>
 #include "vtkEMSegment.h"
 #include "vtkImageAlgorithm.h"
+#include <vtkVersion.h>
+class vtkDataObject;
 class vtkImageData;
 class vtkImageReader;
 // Just made for vtkImageEMGeneral and its kids
@@ -217,7 +220,11 @@ class VTK_EMSEGMENT_EXPORT vtkImageEMGeneral : public vtkImageAlgorithm
   void PrintSelf(ostream& os, vtkIndent indent) { Superclass::PrintSelf(os, indent); };
 //Kilian
 //BTX
+#if (VTK_MAJOR_VERSION <= 5)
   void SetInputIndex(int index, vtkImageData *image) {this->SetInput(index,image);}
+#else
+  void SetInputIndex(int index, vtkImageData *image) {this->SetInputData(index, image);}
+#endif
 
   void PrintMatrix(double **mat, int yMax,int xMax); 
   void PrintMatrix3D(double ***mat, int zMax,int yMax,int xMax); 

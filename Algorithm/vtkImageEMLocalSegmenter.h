@@ -88,7 +88,11 @@ class VTK_EMSEGMENT_EXPORT vtkImageEMLocalSegmenter : public vtkImageEMGeneral
   vtkSetStringMacro(PrintDir);
 
 
+#if (VTK_MAJOR_VERSION <= 5)
   void SetImageInput(int index, vtkImageData *image) {this->SetInput(index,image);}
+#else
+  void SetImageInput(int index, vtkImageData *image) {this->SetInputData(index,image);}
+#endif
 
   vtkGetMacro(ImageProd, int); 
 

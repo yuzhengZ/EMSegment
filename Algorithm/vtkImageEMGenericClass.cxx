@@ -86,7 +86,11 @@ vtkImageEMGenericClass::vtkImageEMGenericClass()
     vtkImageData* UpdateBlubber = vtkImageData::New();
     UpdateBlubber->SetExtent(0,0,0,0,0,0);
     UpdateBlubber->AllocateScalars();
+#if (VTK_MAJOR_VERSION <= 5)
     this->SetInput(0,UpdateBlubber);
+#else
+    this->SetInputData(0,UpdateBlubber);
+#endif
     UpdateBlubber->Delete();
     this->PrintWeights        = 0;
  }

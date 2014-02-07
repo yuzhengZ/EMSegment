@@ -453,13 +453,21 @@ void vtkImageLogOdds::ExecuteData(vtkDataObject *)
 void vtkImageLogOdds::SetProbabilities(int index, vtkImageData *image) 
 {
      assert(this->Mode ==  LOGODDS_PROB2LOG); 
+#if (VTK_MAJOR_VERSION <= 5)
      this->SetInput(index,image);
+#else
+     this->SetInputData(index,image);
+#endif
 }
 
 void vtkImageLogOdds::SetLogOdds(int index, vtkImageData *image)
 {
       assert(this->Mode > LOGODDS_PROB2LOG);  
-      this->SetInput(index,image);
+#if (VTK_MAJOR_VERSION <= 5)
+     this->SetInput(index,image);
+#else
+     this->SetInputData(index,image);
+#endif
 }
 
  // See earlier explanations about different modes

@@ -704,8 +704,13 @@ void vtkImageEMLocalSegmenter::ExecuteData(vtkDataObject *)
   this->ResetWarningMessage();
 
   // this->NumberOfInputs = Actual number of inputs defined
+#if (VTK_MAJOR_VERSION <= 5)
   if (this->NumInputImages > this->NumberOfInputs) {
     vtkEMAddErrorMessage( "NumOfInputs ("<< this->NumberOfInputs << ") is greater than the number of Input images defined ("<<this->NumberOfInputs<<")!");
+#else
+  if (this->NumInputImages > this->GetNumInputImages()) {
+    vtkEMAddErrorMessage( "NumOfInputs ("<< this->GetNumInputImages() << ") is greater than the number of Input images defined ("<<this->GetNumInputImages()<<")!");
+#endif
     return;
   } 
 
@@ -800,10 +805,17 @@ void vtkImageEMLocalSegmenter::ExecuteData(vtkDataObject *)
   // Read in Debugging Data 
   // -----------------------------------------------------
   // For Debugging:
+#if (VTK_MAJOR_VERSION <= 5)
   if (EM_DEBUG && (idx1 < this->NumberOfInputs)) {
     this->DebugImage = new short*[this->NumberOfInputs - idx1];
     i = 0;
     while (idx1 < this->NumberOfInputs) {
+#else
+  if (EM_DEBUG && (idx1 < this->GetNumInputImages())) {
+    this->DebugImage = new short*[this->GetNumInputImages() - idx1];
+    i = 0;
+    while (idx1 < this->GetNumInputImages()) {
+#endif
       std::cerr << "Loading EMDEBUG Volume ("<< idx1 << ") into EMAlgorithm .....................";
       this->DebugImage[i] = (short*) inData[idx1]->GetScalarPointerForExtent(this->Extent);
       idx1 ++;

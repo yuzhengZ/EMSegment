@@ -24,6 +24,7 @@ MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 
 #include "vtkITKImageWriter.h"
 #include "vtkMatrix4x4.h"
+#include <vtkVersion.h>
 
 // --------------------------------------------------------------------------------------------------------------------------
 //  Registration Functions 
@@ -162,7 +163,11 @@ int EMLocalAlgorithm_GEImageWriter(vtkImageData *Volume, const char *FileName,in
    std::string  name =  std::string (FileName) +  std::string(".nhdr");
   if (PrintFlag) std::cerr << "Write to file " <<   name.c_str() << endl;
    vtkITKImageWriter*  export_iwriter =  vtkITKImageWriter::New();
+#if (VTK_MAJOR_VERSION <= 5)
    export_iwriter->SetInput(Volume);
+#else
+   export_iwriter->SetInputData(Volume);
+#endif
    export_iwriter->SetFileName(name.c_str());
    vtkMatrix4x4* mat = vtkMatrix4x4::New();
    export_iwriter->SetRasToIJKMatrix(mat);

@@ -54,6 +54,7 @@
 //#include "vtkImageIsoContourDist.h"
 //#include "vtkImageFastSignedChamfer.h"
 #include "vtkMultiThreader.h"
+#include <vtkVersion.h>
 
 #ifndef __APPLE__
 // apparently this header was left out of osx and isn't needed
@@ -266,24 +267,41 @@ vtkLevelSets::~vtkLevelSets()
 
 
   if (fm!=NULL) {
+#if (VTK_MAJOR_VERSION <= 5)
     fm->SetInput((vtkImageData*) NULL);
+#else
+    fm->SetInputData((vtkImageData*) NULL);
+#endif
     fm->Delete();
     fm = NULL;
   }
 
   if (isodist!=NULL) {
+#if (VTK_MAJOR_VERSION <= 5)
     isodist->SetInput((vtkImageData*) NULL);
+#else
+    isodist->SetInputData((vtkImageData*) NULL);
+#endif
     isodist->Delete();
     isodist = NULL;
   }
 
   if (chamfer!=NULL) {
+#if (VTK_MAJOR_VERSION <= 5)
     chamfer->SetInput((vtkImageData*) NULL);
+#else
+    chamfer->SetInputData((vtkImageData*) NULL);
+#endif
     chamfer->Delete();
     chamfer = NULL;
   }
 
   if (shape!=NULL) {
+#if (VTK_MAJOR_VERSION <= 5)
+    shape->SetInput((vtkImageData*) NULL);
+#else
+    shape->SetInputData((vtkImageData*) NULL);
+#endif
     shape->SetInput((vtkImageData*) NULL);
     shape->Delete();
     shape = NULL;
@@ -405,7 +423,11 @@ void vtkLevelSets::DistanceMap()
       ptr++;
     }
     
+#if (VTK_MAJOR_VERSION <= 5)
     writer->SetInput(copyImage);
+#else
+    writer->SetInputData(copyImage);
+#endif
     distmap_count++;
     sprintf(name,"distmap_input%d.vtk",distmap_count);
     writer->SetFileName(name);
@@ -785,7 +807,11 @@ void vtkLevelSets::DistanceMapFMOld()
    // Trick:
    // Set the init image equal to the input image
    // which set a uniform force of 1 for the evolution
-   fm->SetInput(     current_image);
+#if (VTK_MAJOR_VERSION <= 5)
+   fm->SetInput(current_image);
+#else
+   fm->SetInputData(current_image);
+#endif
    fm->Setinitimage( current_image);
  
    fm->Setinitiso(0);
@@ -853,7 +879,11 @@ void vtkLevelSets::DistanceMapFM()
    current_image->GetPointData()->SetScalars(da);
 
    // Compute the distance for the neighbors of the isocontour
+#if (VTK_MAJOR_VERSION <= 5)
    isodist->SetInput(current_image);
+#else
+   isodist->SetInputData(current_image);
+#endif
    isodist->Setthreshold(0);
    isodist->Setfarvalue(Band+1);
    if (bnd_allocated)
@@ -873,8 +903,12 @@ void vtkLevelSets::DistanceMapFM()
   {
     vtkStructuredPointsWriter *writer = vtkStructuredPointsWriter::New();
     char name[255];
-    
+
+#if (VTK_MAJOR_VERSION <= 5)
     writer->SetInput(res1);
+#else
+    writer->SetInputData(res1);
+#endif
     sprintf(name,"res1.vtk");
     writer->SetFileName(name);
     writer->SetFileTypeToBinary();
@@ -927,12 +961,20 @@ void vtkLevelSets::DistanceMapFM()
      fprintf(stderr, ".");fflush(stderr);
    }
    
+#if (VTK_MAJOR_VERSION <= 5)
    isodist->SetInput(NULL);
+#else
+   isodist->SetInputData(NULL);;
+#endif
    //   isodist->Delete();
    
    isodist = NULL;
    da->Delete();
+#if (VTK_MAJOR_VERSION <= 5)
    fm->SetInput(NULL);
+#else
+   fm->SetInputData(NULL);
+#endif
    res1->Delete();
    current_image ->Delete();
 
@@ -993,7 +1035,11 @@ void vtkLevelSets::DistanceMapChamfer()
    current_image->GetPointData()->SetScalars(da);
 
    // Compute the distance for the neighbors of the isocontour
+#if (VTK_MAJOR_VERSION <= 5)
    isodist->SetInput(current_image);
+#else
+   isodist->SetInputData(current_image);
+#endif
    isodist->Setthreshold(0);
    isodist->Setfarvalue(Band+1);
 
@@ -1018,7 +1064,11 @@ void vtkLevelSets::DistanceMapChamfer()
     vtkStructuredPointsWriter *writer = vtkStructuredPointsWriter::New();
     char name[255];
     
+#if (VTK_MAJOR_VERSION <= 5)
     writer->SetInput(res1);
+#else
+    writer->SetInputData(res1);
+#endif
     sprintf(name,"res1.vtk");
     writer->SetFileName(name);
     writer->SetFileTypeToBinary();
@@ -1052,7 +1102,11 @@ void vtkLevelSets::DistanceMapChamfer()
    chamfer->UseInputOutputArray( newU );
 
    // input not used ...
-   chamfer->SetInput(       res1);
+#if (VTK_MAJOR_VERSION <= 5)
+   chamfer->SetInput(res1);
+#else
+   chamfer->SetInputData(res1);
+#endif
    chamfer->Setmaxdist(     Band+1);
    // Don't propagate all the border points
    chamfer->Setnoborder(1);
@@ -1128,7 +1182,11 @@ void vtkLevelSets::DistanceMapShape()
    current_image->GetPointData()->SetScalars(da);
 
    // Compute the distance for the neighbors of the isocontour
+#if (VTK_MAJOR_VERSION <= 5)
    shape->SetInput(current_image);
+#else
+   shape->SetInputData(current_image);
+#endif
    shape->Setthreshold(0);
    shape->Setmindist(ShapeMinDist);
    shape->Setmaxdist(Band+1);
@@ -3329,8 +3387,12 @@ void vtkLevelSets::PreComputeDataAttachment()
       *ptr = secdergrad[i];
       ptr++;
     }
-    
+
+#if (VTK_MAJOR_VERSION <= 5)
     writer->SetInput(copyImage);
+#else
+    writer->SetInputData(copyImage);
+#endif
     sprintf(name,"SecDerGrad.vtk");
     writer->SetFileName(name);
     writer->SetFileTypeToBinary();

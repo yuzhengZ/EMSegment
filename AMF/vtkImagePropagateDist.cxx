@@ -51,6 +51,7 @@
 #include "vtkPointData.h"
 #include "vtkImageData.h"
 #include "vtkStructuredPointsWriter.h"
+#include <vtkVersion.h>
 
 #define TRUE    1
 #define FALSE   0
@@ -1087,8 +1088,12 @@ void vtkImagePropagateDist::SaveTrajectories2D( int num)
       *ptr = 0;
     ptr++;
   }
-  
+
+#if (VTK_MAJOR_VERSION <= 5)
   writer->SetInput(copyImage);
+#else
+  writer->SetInputData(copyImage);
+#endif
   sprintf(name,"trajectory%d_X.vtk",num);
   writer->SetFileName(name);
   writer->SetFileTypeToBinary();
@@ -1106,7 +1111,11 @@ void vtkImagePropagateDist::SaveTrajectories2D( int num)
     ptr++;
   }
   
+#if (VTK_MAJOR_VERSION <= 5)
   writer->SetInput(copyImage);
+#else
+  writer->SetInputData(copyImage);
+#endif
   sprintf(name,"trajectory%d_Y.vtk",num);
   writer->SetFileName(name);
   writer->SetFileTypeToBinary();
@@ -1171,7 +1180,11 @@ void vtkImagePropagateDist::SaveTrajectories3D( int num)
     ptr++;
   }
   
+#if (VTK_MAJOR_VERSION <= 5)
   writer->SetInput(copyImage);
+#else
+  writer->SetInputData(copyImage);
+#endif
   sprintf(name,"trajectory%d_X.vtk",num);
   writer->SetFileName(name);
   writer->SetFileTypeToBinary();
@@ -1189,7 +1202,11 @@ void vtkImagePropagateDist::SaveTrajectories3D( int num)
     ptr++;
   }
   
+#if (VTK_MAJOR_VERSION <= 5)
   writer->SetInput(copyImage);
+#else
+  writer->SetInputData(copyImage);
+#endif
   sprintf(name,"trajectory%d_Y.vtk",num);
   writer->SetFileName(name);
   writer->SetFileTypeToBinary();
@@ -1205,7 +1222,11 @@ void vtkImagePropagateDist::SaveTrajectories3D( int num)
     ptr++;
   }
   
+#if (VTK_MAJOR_VERSION <= 5)
   writer->SetInput(copyImage);
+#else
+  writer->SetInputData(copyImage);
+#endif
   sprintf(name,"trajectory%d_Z.vtk",num);
   writer->SetFileName(name);
   writer->SetFileTypeToBinary();
@@ -1292,7 +1313,11 @@ void vtkImagePropagateDist::SaveProjection( int num)
     ptrZ++;
   }
   
+#if (VTK_MAJOR_VERSION <= 5)
   writer->SetInput(copyImageX);
+#else
+  writer->SetInputData(copyImageX);
+#endif
   sprintf(name,"projection%d_X.vtk",num);
   writer->SetFileName(name);
   writer->SetFileTypeToBinary();
@@ -1300,7 +1325,11 @@ void vtkImagePropagateDist::SaveProjection( int num)
 
   fprintf(stderr,"%s saved \n",name);
 
+#if (VTK_MAJOR_VERSION <= 5)
   writer->SetInput(copyImageY);
+#else
+  writer->SetInputData(copyImageY);
+#endif
   sprintf(name,"projection%d_Y.vtk",num);
   writer->SetFileName(name);
   writer->SetFileTypeToBinary();
@@ -1308,7 +1337,11 @@ void vtkImagePropagateDist::SaveProjection( int num)
 
   fprintf(stderr,"%s saved \n",name);
 
+#if (VTK_MAJOR_VERSION <= 5)
   writer->SetInput(copyImageZ);
+#else
+  writer->SetInputData(copyImageZ);
+#endif
   sprintf(name,"projection%d_Z.vtk",num);
   writer->SetFileName(name);
   writer->SetFileTypeToBinary();
@@ -1353,7 +1386,11 @@ void vtkImagePropagateDist::SaveState( int num)
     ptr++;
   }
   
+#if (VTK_MAJOR_VERSION <= 5)
   writer->SetInput(copyImage);
+#else
+  writer->SetInputData(copyImage);
+#endif
   sprintf(name,"State%d.vtk",num);
   writer->SetFileName(name);
   writer->SetFileTypeToBinary();
@@ -1399,7 +1436,11 @@ void vtkImagePropagateDist::SaveSkeleton( int num)
     ptr++;
   }
   
+#if (VTK_MAJOR_VERSION <= 5)
   writer->SetInput(copyImage);
+#else
+  writer->SetInputData(copyImage);
+#endif
   sprintf(name,"Skeleton%d.vtk",num);
   writer->SetFileName(name);
   writer->SetFileTypeToBinary();
@@ -1445,7 +1486,11 @@ void vtkImagePropagateDist::SaveDistance( int num)
       ptr++;
     }
     
+#if (VTK_MAJOR_VERSION <= 5)
     writer->SetInput(copyImage);
+#else
+    writer->SetInputData(copyImage);
+#endif
     sprintf(name,"distmap%d.vtk",num);
     writer->SetFileName(name);
     writer->SetFileTypeToBinary();

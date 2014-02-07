@@ -58,7 +58,11 @@ class VTK_EMSEGMENT_EXPORT vtkImageEMLocalGenericClass : public vtkImageEMGeneri
 
   // Description:
   // Probability Data defining the spatial conditional label distribution
+#if (VTK_MAJOR_VERSION <= 5)
   void SetProbDataPtr(vtkImageData *image) {this->SetInput(1,image);}
+#else
+  void SetProbDataPtr(vtkImageData *image) {this->SetInputData(1,image);}
+#endif
   //BTX
   // Description:
   // SegmentationBoundary condition are taken into account (Type == 1) or not (Type == 0);

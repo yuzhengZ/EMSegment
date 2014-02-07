@@ -23,6 +23,7 @@
 #include "vtkImageMathematics.h"
 #include "vtkImageReader.h"
 #include "vtkObjectFactory.h"
+#include <vtkVersion.h>
 
 #include <vtksys/SystemTools.hxx>
 #include <sstream>
@@ -826,14 +827,22 @@ void vtkImageEMGeneral::TestMatrixFunctions(int MatrixDim,int iter) {
 
 float vtkImageEMGeneral_CountLabel(vtkImageThreshold* trash,vtkImageData * Input, float val) {
   float result;
-  trash->SetInput(Input); 
+#if (VTK_MAJOR_VERSION <= 5)
+  trash->SetInput(Input);
+#else
+  trash->SetInputData(Input);
+#endif
   trash->ThresholdBetween(val,val);
   trash->SetInValue(1.0); 
   trash->SetOutValue(0.0);
   trash->SetOutputScalarType(Input->GetScalarType());
   trash->Update();
   vtkImageAccumulate *Accu = vtkImageAccumulate::New() ;
+#if (VTK_MAJOR_VERSION <= 5)
   Accu->SetInput(trash->GetOutput());
+#else
+  Accu->SetInputConnection(trash->GetOutputPort());
+#endif
   Accu->SetComponentExtent(0,1,0,0,0,0);
   Accu->SetComponentOrigin(0.0,0.0,0.0); 
   Accu->SetComponentSpacing(1.0,1.0,1.0);
@@ -856,13 +865,21 @@ float vtkImageEMGeneral::CalcSimularityMeasure (vtkImageData *Image1, vtkImageDa
                     *Final  =  vtkImageThreshold::New();
 
   vtkImageClip      *ROI1 = vtkImageClip::New();
+#if (VTK_MAJOR_VERSION <= 5)
   ROI1->SetInput(Image1);
+#else
+  ROI1->SetInputData(Image1);
+#endif
   ROI1->SetOutputWholeExtent(BoundaryMin[0],BoundaryMax[0],BoundaryMin[1],BoundaryMax[1],BoundaryMin[2],BoundaryMax[2]);
   ROI1->ClipDataOn(); 
   ROI1->Update();
 
   vtkImageClip      *ROI2 = vtkImageClip::New();
+#if (VTK_MAJOR_VERSION <= 5)
   ROI2->SetInput(Image2);
+#else
+  ROI2->SetInputData(Image2);
+#endif
   ROI2->SetOutputWholeExtent(BoundaryMin[0],BoundaryMax[0],BoundaryMin[1],BoundaryMax[1],BoundaryMin[2],BoundaryMax[2]);
   ROI2->ClipDataOn(); 
   ROI2->Update();
@@ -875,8 +892,13 @@ float vtkImageEMGeneral::CalcSimularityMeasure (vtkImageData *Image1, vtkImageDa
 
   // Find out overlapping volume 
   MathImg->SetOperationToAdd();
+#if (VTK_MAJOR_VERSION <= 5)
   MathImg->SetInput(0,Trash1->GetOutput());
   MathImg->SetInput(1,Trash2->GetOutput());
+#else
+  MathImg->SetInputConnection(0,Trash1->GetOutputPort());
+  MathImg->SetInputConnection(1,Trash2->GetOutputPort());
+#endif
   MathImg->Update();
   NumMeasure = vtkImageEMGeneral_CountLabel(Final,MathImg->GetOutput(),2);
   if (DivMeasure > 0) result = 2.0*NumMeasure / DivMeasure;
@@ -911,8 +933,13 @@ float vtkImageEMGeneral::CalcSimularityMeasure (vtkImageData *Image1, vtkImageDa
 
   // Find out overlapping volume 
   MathImg->SetOperationToAdd();
+#if (VTK_MAJOR_VERSION <= 5)
   MathImg->SetInput(0,Trash1->GetOutput());
   MathImg->SetInput(1,Trash2->GetOutput());
+#else
+  MathImg->SetInputConnection(0,Trash1->GetOutputPort());
+  MathImg->SetInputConnection(1,Trash2->GetOutputPort());
+#endif
   MathImg->Update();
   NumMeasure = vtkImageEMGeneral_CountLabel(Final,MathImg->GetOutput(),2);
   if (DivMeasure > 0) result = 2.0*NumMeasure / DivMeasure;
@@ -968,19 +995,31 @@ double vtkImageEMGeneral::CalcSoftSimularityMeasureNormalize (vtkImageData *Imag
 
 
   vtkImageCast* CAST1 = vtkImageCast::New();
-  CAST1->SetInput(Image1);  
+#if (VTK_MAJOR_VERSION <= 5)
+  CAST1->SetInput(Image1);
+#else
+  CAST1->SetInputData(Image1);
+#endif
   CAST1->SetOutputScalarTypeToFloat(); 
   CAST1->Update();
 
    vtkImageMathematics *SHIFT1 = vtkImageMathematics::New();
    SHIFT1->SetOperationToAddConstant(); 
+#if (VTK_MAJOR_VERSION <= 5)
    SHIFT1->SetInput1(CAST1->GetOutput());
+#else
+   SHIFT1->SetInputConnection(1, CAST1->GetOutputPort());
+#endif
    SHIFT1->SetConstantC(- min1 ); 
    SHIFT1->Update();
 
    vtkImageMathematics *NORM1 = vtkImageMathematics::New();
    NORM1->SetOperationToMultiplyByK(); 
+#if (VTK_MAJOR_VERSION <= 5)
    NORM1->SetInput1(SHIFT1->GetOutput());
+#else
+   NORM1->SetInputConnection(1, SHIFT1->GetOutputPort());
+#endif
    NORM1->SetConstantK(norm1);
    NORM1->Update();
 
@@ -992,19 +1031,31 @@ double vtkImageEMGeneral::CalcSoftSimularityMeasureNormalize (vtkImageData *Imag
    }
 
   vtkImageCast* CAST2 = vtkImageCast::New();
-  CAST2->SetInput(Image2);  
+#if (VTK_MAJOR_VERSION <= 5)
+  CAST2->SetInput(Image2);
+#else
+  CAST2->SetInputData(Image2);
+#endif
   CAST2->SetOutputScalarTypeToFloat(); 
   CAST2->Update();
 
    vtkImageMathematics *SHIFT2 = vtkImageMathematics::New();
-   SHIFT2->SetOperationToAddConstant(); 
+   SHIFT2->SetOperationToAddConstant();
+#if (VTK_MAJOR_VERSION <= 5)
    SHIFT2->SetInput1(CAST2->GetOutput());
+#else
+   SHIFT2->SetInputConnection(1, CAST2->GetOutputPort());
+#endif
    SHIFT2->SetConstantC(- min2 ); 
    SHIFT2->Update();
 
    vtkImageMathematics *NORM2 = vtkImageMathematics::New();
    NORM2->SetOperationToMultiplyByK(); 
-   NORM2->SetInput1(SHIFT2->GetOutput());
+#if (VTK_MAJOR_VERSION <= 5)
+   NORM2->SetInput2(SHIFT1->GetOutput());
+#else
+   NORM2->SetInputConnection(1, SHIFT2->GetOutputPort());
+#endif
    NORM2->SetConstantK(norm2);
    NORM2->Update();
 
@@ -1038,20 +1089,37 @@ double vtkImageEMGeneral::CalcSoftSimularityMeasure (vtkImageData *Image1, vtkIm
 
    vtkImageMathematics *UNION = vtkImageMathematics::New();
    UNION->SetOperationToMultiply();
+#if (VTK_MAJOR_VERSION <= 5)
    UNION->SetInput1(Image1);
    UNION->SetInput2(Image2);
+#else
+   UNION->SetInputData(1, Image1);
+   UNION->SetInputData(2, Image2);
+#endif
    UNION->Update();
 
    vtkImageSumOverVoxels* VOXELSUM  = vtkImageSumOverVoxels::New();
-   VOXELSUM ->SetInput(UNION->GetOutput());
+#if (VTK_MAJOR_VERSION <= 5)
+   VOXELSUM->SetInput(UNION->GetOutput());
+#else
+   VOXELSUM->SetInputConnection(UNION->GetOutputPort());
+#endif
    VOXELSUM ->Update();
    double nominator = 2*VOXELSUM->GetVoxelSum();
 
+#if (VTK_MAJOR_VERSION <= 5)
    VOXELSUM ->SetInput(Image1);
+#else
+   VOXELSUM ->SetInputData(Image1);
+#endif
    VOXELSUM ->Update();
    double denominator = VOXELSUM->GetVoxelSum();
 
+#if (VTK_MAJOR_VERSION <= 5)
    VOXELSUM ->SetInput(Image2);
+#else
+   VOXELSUM ->SetInputData(Image2);
+#endif
    VOXELSUM ->Update();
    denominator += VOXELSUM->GetVoxelSum();
 
@@ -1067,7 +1135,11 @@ double vtkImageEMGeneral::CalcSoftSimularityMeasure (vtkImageData *Image1, vtkIm
 
 double vtkImageEMGeneral::CalculateMean(vtkImageData *image)  {
   vtkImageSumOverVoxels* sum =  vtkImageSumOverVoxels::New();
+#if (VTK_MAJOR_VERSION <= 5)
   sum->SetInput(image);
+#else
+  sum->SetInputData(image);
+#endif
   sum->Update();
   int *dim = image->GetDimensions();
   double n = double(dim[0]*dim[1]*dim[2]);
@@ -1078,18 +1150,30 @@ double vtkImageEMGeneral::CalculateMean(vtkImageData *image)  {
 
 double vtkImageEMGeneral::CalculateCovariance(vtkImageData *image, double mean)  {
   vtkImageMathematics* shift = vtkImageMathematics::New();
+#if (VTK_MAJOR_VERSION <= 5)
   shift->SetInput(image);
+#else
+  shift->SetInputData(image);
+#endif
   shift->SetOperationToAddConstant();
   shift->SetConstantC(-mean);
   shift->Update();
 
   vtkImageMathematics* sqr = vtkImageMathematics::New();
+#if (VTK_MAJOR_VERSION <= 5)
   sqr->SetInput(shift->GetOutput());
+#else
+  sqr->SetInputConnection(shift->GetOutputPort());
+#endif
   sqr->SetOperationToSquare();
   sqr->Update();
 
   vtkImageSumOverVoxels* sum =  vtkImageSumOverVoxels::New();
+#if (VTK_MAJOR_VERSION <= 5)
   sum->SetInput(sqr->GetOutput());
+#else
+  sum->SetInputConnection(sqr->GetOutputPort());
+#endif
   sum->Update();
   int *dim = image->GetDimensions();
   double n = double(dim[0]*dim[1]*dim[2]);
@@ -1114,25 +1198,42 @@ double vtkImageEMGeneral::CalculateNCC(vtkImageData *image1, vtkImageData *image
   double cov2 =  this->CalculateCovariance(image2,mean2)*(n-1);
  
  vtkImageMathematics* shift1 = vtkImageMathematics::New();
+#if (VTK_MAJOR_VERSION <= 5)
   shift1->SetInput(image1);
+#else
+  shift1->SetInput1Data(image1);
+#endif
   shift1->SetOperationToAddConstant();
   shift1->SetConstantC(-mean1);
   shift1->Update();
 
  vtkImageMathematics* shift2 = vtkImageMathematics::New();
+#if (VTK_MAJOR_VERSION <= 5)
   shift2->SetInput(image2);
+#else
+  shift2->SetInput1Data(image2);
+#endif
   shift2->SetOperationToAddConstant();
   shift2->SetConstantC(-mean2);
   shift2->Update();
 
   vtkImageMathematics* mul = vtkImageMathematics::New();
+#if (VTK_MAJOR_VERSION <= 5)
   mul->SetInput1(shift1->GetOutput());
   mul->SetInput2(shift2->GetOutput());
+#else
+  mul->SetInputConnection(1, shift1->GetOutputPort());
+  mul->SetInputConnection(1, shift2->GetOutputPort());
+#endif
   mul->SetOperationToMultiply();
   mul->Update();
 
   vtkImageSumOverVoxels* numerator =  vtkImageSumOverVoxels::New();
+#if (VTK_MAJOR_VERSION <= 5)
   numerator->SetInput(mul->GetOutput());
+#else
+  numerator->SetInputConnection(mul->GetOutputPort());
+#endif
   numerator->Update();
 
   double NCC =  numerator->GetVoxelSum() / (sqrt(cov1) *sqrt(cov2));

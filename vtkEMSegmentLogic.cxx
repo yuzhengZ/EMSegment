@@ -25,6 +25,7 @@
 #include <vtkMRMLVolumeArchetypeStorageNode.h>
 
 // VTK includes
+#include <vtkDataObject.h>
 #include <vtkDirectory.h>
 #include <vtkGridTransform.h>
 #include <vtkIdentityTransform.h>
@@ -698,7 +699,11 @@ void vtkEMSegmentLogic::SlicerImageReslice(vtkMRMLVolumeNode* inputVolumeNode, v
 
   //
   // set inputs
+#if (VTK_MAJOR_VERSION <= 5)
   resliceFilter->SetInput(inputImageData);
+#else
+  resliceFilter->SetInputData(inputImageData);
+#endif
 
   //
   // set geometry
@@ -803,7 +808,11 @@ void vtkEMSegmentLogic::SlicerImageResliceWithGrid(vtkMRMLVolumeNode* inputVolum
 
   //
   // set inputs
+#if (VTK_MAJOR_VERSION <= 5)
   resliceFilter->SetInput(inputImageData);
+#else
+  resliceFilter->SetInputData(inputImageData);
+#endif
 
   //
   // create total transform
@@ -905,7 +914,11 @@ void vtkEMSegmentLogic::StartPreprocessingResampleAndCastToTarget(vtkMRMLVolumeN
     {
     //cast
     VTK_CREATE(vtkImageCast, cast);
+#if (VTK_MAJOR_VERSION <= 5)
     cast->SetInput(outputVolumeNode->GetImageData());
+#else
+    cast->SetInputData(outputVolumeNode->GetImageData());
+#endif
     cast->SetOutputScalarType(fixedVolumeNode->GetImageData()->GetScalarType());
     cast->Update();
     outputVolumeNode->GetImageData()->DeepCopy(cast->GetOutput());
@@ -1911,7 +1924,11 @@ void vtkEMSegmentLogic::SubParcelateSegmentation(vtkImageData* origSegmentation,
 
       // Define ROI of interest - note that this is based on original segmentation so that if label appears in subparcellation as well as original parcellation we can handle it 
       VTK_CREATE(vtkImageThreshold, roiMap);
+#if (VTK_MAJOR_VERSION <= 5)
       roiMap->SetInput(origSegCopy);
+#else
+      roiMap->SetInputData(origSegCopy);
+#endif
       roiMap->ThresholdBetween(childLabel, childLabel);
       roiMap->ReplaceOutOn();
       roiMap->SetInValue(1);
@@ -1920,7 +1937,11 @@ void vtkEMSegmentLogic::SubParcelateSegmentation(vtkImageData* origSegmentation,
 
       // Create map of background
       VTK_CREATE(vtkImageThreshold, bgMap);
+#if (VTK_MAJOR_VERSION <= 5)
       bgMap->SetInput(origSegCopy);
+#else
+      bgMap->SetInputData(origSegCopy);
+#endif
       bgMap->ThresholdBetween(childLabel, childLabel);
       bgMap->ReplaceOutOn();
       bgMap->ReplaceInOn();
@@ -1930,15 +1951,24 @@ void vtkEMSegmentLogic::SubParcelateSegmentation(vtkImageData* origSegmentation,
 
       // Cast Parcellation map  to scalar type of ROI = initial segmentation  
       VTK_CREATE(vtkImageCast, castParcellation);
+#if (VTK_MAJOR_VERSION <= 5)
       castParcellation->SetInput(parcellationNode->GetImageData());
+#else
+      castParcellation->SetInputData(parcellationNode->GetImageData());
+#endif
       castParcellation->SetOutputScalarType(
           roiMap->GetOutput()->GetScalarType());
       castParcellation->Update();
 
       // Parcellate ROI 
       VTK_CREATE(vtkImageMathematics, roiParcellation);
+#if (VTK_MAJOR_VERSION <= 5)
       roiParcellation->SetInput1(roiMap->GetOutput());
       roiParcellation->SetInput2(castParcellation->GetOutput());
+#else
+      roiParcellation->SetInputConnection(1, roiMap->GetOutputPort());
+      roiParcellation->SetInputConnection(2, castParcellation->GetOutputPort());
+#endif
       roiParcellation->SetOperationToMultiply();
       roiParcellation->Update();
 
@@ -1948,15 +1978,25 @@ void vtkEMSegmentLogic::SubParcelateSegmentation(vtkImageData* origSegmentation,
       tempCurrParcel->DeepCopy(currentParcellation);
 
       VTK_CREATE(vtkImageMathematics, bgParcellation);
+#if (VTK_MAJOR_VERSION <= 5)
       bgParcellation->SetInput1(bgMap->GetOutput());
-      bgParcellation->SetInput2(tempCurrParcel); 
+      bgParcellation->SetInput2(tempCurrParcel);
+#else
+      bgParcellation->SetInputConnection(1, bgMap->GetOutputPort());
+      bgParcellation->SetInput2Data(vtkDataObject::SafeDownCast(tempCurrParcel));
+#endif
       bgParcellation->SetOperationToMultiply();
       bgParcellation->Update();
 
       // Now update the ROI with the new parcellation 
       VTK_CREATE(vtkImageMathematics, parcellatedSeg);
+#if (VTK_MAJOR_VERSION <= 5)
       parcellatedSeg->SetInput1(bgParcellation->GetOutput());
       parcellatedSeg->SetInput2(roiParcellation->GetOutput());
+#else
+      parcellatedSeg->SetInputConnection(1, bgParcellation->GetOutputPort());
+      parcellatedSeg->SetInputConnection(2, roiParcellation->GetOutputPort());
+#endif
       parcellatedSeg->SetOperationToAdd();
       parcellatedSeg->Update();
 
@@ -2262,7 +2302,11 @@ int vtkEMSegmentLogic::StartSegmentationWithoutPreprocessingAndSaving()
     VTK_CREATE(vtkImageData, input);
     input->DeepCopy(postProcessing);
     VTK_CREATE(vtkImageIslandFilter, islandFilter);
+#if (VTK_MAJOR_VERSION <= 5)
     islandFilter->SetInput(input);
+#else
+    islandFilter->SetInputData(input);
+#endif
     islandFilter->SetIslandMinSize(
         this->GetMRMLManager()->GetMinimumIslandSize());
     if (this->GetMRMLManager()->GetIsland2DFlag())
@@ -3411,11 +3455,20 @@ int vtkEMSegmentLogic::ActiveMeanField(vtkImageEMLocalSegmenter* segmenter, vtkI
     {
 
     logOddsInSlice[i] = vtkImageClip::New();
+#if (VTK_MAJOR_VERSION <= 5)
     logOddsInSlice[i]->SetInput(logOdds->GetLogOdds(i));
+#else
+    logOddsInSlice[i]->SetInputData(logOdds->GetLogOdds(i));
+#endif
     logOddsInSlice[i]->ClipDataOn();
 
     logOddsInShiftExtent[i] = vtkImageTranslateExtent::New();
+#if (VTK_MAJOR_VERSION <= 5)
     logOddsInShiftExtent[i]->SetInput(logOddsInSlice[i]->GetOutput());
+#else
+    logOddsInShiftExtent[i]->SetInputConnection(logOddsInSlice[i]->GetOutputPort());
+#endif
+
 
     levelSetInCurves[i] = vtkImageLevelSets::New();
 
@@ -3591,7 +3644,11 @@ void vtkEMSegmentLogic::WriteImage(vtkImageData* Volume, const char* FileName)
   std::string name = std::string(FileName) + std::string(".nhdr");
   std::cout << "Write to file " << name.c_str() << endl;
   VTK_CREATE(vtkITKImageWriter, export_iwriter);
+#if (VTK_MAJOR_VERSION <= 5)
   export_iwriter->SetInput(Volume);
+#else
+  export_iwriter->SetInputData(Volume);
+#endif
   export_iwriter->SetFileName(name.c_str());
   VTK_CREATE(vtkMatrix4x4, mat);
   export_iwriter->SetRasToIJKMatrix(mat);

@@ -36,6 +36,7 @@ VTK_THREAD_RETURN_TYPE EMLocalAlgorithm_E_Step_Threader_Function(void *arg);
 #include "vtkImageExport.h"
 #include "vtkImageImport.h"
 #include "vtkITKUtility.h"
+#include <vtkVersion.h>
 
 #include "EMLocalAlgorithm_Initialization.txx"
 #include "EMLocalAlgorithm_MeanField.txx"
@@ -1358,7 +1359,11 @@ void EMLocalAlgorithm<T>::LLSBiasCorrection(int iter)
   vtkImageData* inData = reconstructImage( this->InputVectorPtr, 0 );
 
   vtkImageExport* myVTKtoITKImageExporter = vtkImageExport::New();
+#if (VTK_MAJOR_VERSION <= 5)
   myVTKtoITKImageExporter->SetInput(inData);
+#else
+  myVTKtoITKImageExporter->SetInputData(inData);
+#endif
 
   typedef itk::Image<float, 3> FloatImageType;
 
@@ -1478,7 +1483,11 @@ void EMLocalAlgorithm<T>::LLSBiasCorrection(int iter)
   typedef itk::VTKImageExport<FloatImageType> ImageExportType;
   typename ImageExportType::Pointer myITKtoVTKImageExporter = ImageExportType::New();
   ConnectPipelines(myITKtoVTKImageExporter, myITKtoVTKImageImporter);
+#if (VTK_MAJOR_VERSION <= 5)
   myITKtoVTKImageExporter->SetInput(corrImages[0]);
+#else
+  myITKtoVTKImageExporter->SetInputData(corrImages[0]);
+#endif
   myITKtoVTKImageImporter->Update();
   vtkImageData* outData = myITKtoVTKImageImporter->GetOutput();
   outData->Print(std::cout);

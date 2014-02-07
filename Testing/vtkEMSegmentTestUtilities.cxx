@@ -1,9 +1,11 @@
+#include <vtkDataObject.h>
 #include "vtkEMSegmentTestUtilities.h"
 #include "vtkImageMathematics.h"
 #include "vtkImageAccumulate.h"
 #include "vtkITKArchetypeImageSeriesReader.h"
 #include "vtkITKArchetypeImageSeriesScalarReader.h"
 #include "vtkImageData.h"
+#include <vtkVersion.h>
 
 //
 // This function checks to see if the image stored in standardFilename
@@ -74,8 +76,13 @@ bool ImageDiff(vtkImageData* resultData, std::string standardFilename)
   // compare image voxels
   vtkImageMathematics* imageDifference = vtkImageMathematics::New();
   imageDifference->SetOperationToSubtract();
+#if (VTK_MAJOR_VERSION <= 5)
   imageDifference->SetInput1(resultData);
   imageDifference->SetInput2(standardReader->GetOutput());
+#else
+  imageDifference->SetInputData(1, vtkDataObject::SafeDownCast(resultData));
+  imageDifference->SetInputConnection(1, standardReader->GetOutputPort());
+#endif
 
   vtkImageAccumulate* differenceAccumulator = vtkImageAccumulate::New();
   differenceAccumulator->SetInputConnection(imageDifference->GetOutputPort());
@@ -113,8 +120,13 @@ double CompareTwoVolumes ( vtkImageData* Volume1, vtkImageData* Volume2 , int Fl
   // 1. Subtract the two volumes form each other
 
   vtkImageMathematics* MathImg = vtkImageMathematics::New();
+#if (VTK_MAJOR_VERSION <= 5)
   MathImg->SetInput1(Volume1);
   MathImg->SetInput2(Volume2);
+#else
+  MathImg->SetInputData(1, vtkDataObject::SafeDownCast(Volume1));
+  MathImg->SetInputData(1, vtkDataObject::SafeDownCast(Volume2));
+#endif
   MathImg->SetOperationToSubtract();
   MathImg->Update();
 
@@ -168,7 +180,11 @@ double CompareTwoVolumes ( vtkImageData* Volume1, vtkImageData* Volume2 , int Fl
 
 double* GenerateHistogram (vtkImageAccumulate* Histogram, vtkImageData* InputVolume, int bins) {
 
+#if (VTK_MAJOR_VERSION <= 5)
   Histogram->SetInput(InputVolume);
+#else
+  Histogram->SetInputData(InputVolume);
+#endif
   Histogram->Update();
   int min = Histogram->GetMin()[0];
   int max = Histogram->GetMax()[0];

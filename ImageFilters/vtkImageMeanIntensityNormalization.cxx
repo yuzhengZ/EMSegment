@@ -15,6 +15,7 @@
 #include "vtkObjectFactory.h"
 #include "vtkImageData.h"
 #include "vtkImageMathematics.h"
+#include <vtkVersion.h>
 #include <assert.h>
 
 //------------------------------------------------------------------------------
@@ -56,7 +57,11 @@ void vtkImageMeanIntensityNormalization::PrintSelf(ostream& os, vtkIndent indent
 int* vtkImageMeanIntensityNormalization::InitializeHistogram(vtkImageAccumulate *HIST, vtkImageData *Input, int &HistMin, int &HistMax)
 {
   // 1. Detect extrema 
+#if (VTK_MAJOR_VERSION <= 5)
   HIST->SetInput(Input);
+#else
+  HIST->SetInputData(Input);
+#endif
   HIST->SetComponentSpacing(1,1,1);
   HIST->SetComponentOrigin(0,0,0);
   HIST->Update();
@@ -274,7 +279,11 @@ void vtkImageMeanIntensityNormalization::MeanMRI(vtkImageData *Input, vtkImageDa
   //  Correct Image 
   // -------------------------------------
   CORRECTED = vtkImageMathematics::New();
+#if (VTK_MAJOR_VERSION <= 5)
   CORRECTED->SetInput(0,Input);
+#else
+  CORRECTED->SetInput1Data(0,Input);
+#endif
   CORRECTED->SetConstantK(ImageIntensityCorrectionRatio);
   CORRECTED->SetOperationToMultiplyByK();
   CORRECTED->Update();

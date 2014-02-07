@@ -228,8 +228,12 @@ void vtkImageMultiLevelSets::SetCurve(int initID, vtkImageLevelSets  *initWithou
 
   this->CurvesOutputComplete[initID] = initFinalCurve;
 
-  // Define parameters specific to MultiLevelSet   
+  // Define parameters specific to MultiLevelSet
+#if (VTK_MAJOR_VERSION <= 5)
   this->SetInput(initID,initLogCondIntImage);
+#else
+  this->SetInputData(initID,initLogCondIntImage);
+#endif
   this->logCondIntensityCoefficient[initID] = initLogCondIntCoeff;
   this->logCurveCouplingCoefficient[initID] = initLogCurveCouplingCoeff;
 }

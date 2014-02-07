@@ -57,7 +57,11 @@ class VTK_EMSEGMENT_EXPORT vtkImageEMLocalClass : public vtkImageEMLocalGenericC
 
   // Description:
   // Probability Data defining the spatial conditional label distribution
+#if (VTK_MAJOR_VERSION <= 5)
   void   SetPCAMeanShape(vtkImageData *image) {this->SetInput(2,image);}
+#else
+  void   SetPCAMeanShape(vtkImageData *image) {this->SetInputData(2,image);}
+#endif
 
   //BTX
   void* GetPCAMeanShapePtr(int Type) { return this->GetDataPtr(this->PCAMeanShapeImageData,Type);}

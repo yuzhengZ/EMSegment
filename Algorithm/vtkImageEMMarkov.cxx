@@ -88,9 +88,6 @@ int vtkImageEMMarkov::RequestInformation(
 }
 
 
-
-
-
 //----------------------------------------------------------------------------
 // This templated function executes the filter for any type of data.
 template <class T>

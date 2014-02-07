@@ -1007,7 +1007,8 @@ proc LevelSetsInitialize_CombinationWindow { } {
           Volume(curve,1,resLineInv,vol) SetOutputScalarTypeToShort
       Volume(curve,1,resLineInv,vol) Update
 
-      vtkImageMathematics Volume($LevelSets(GrayImage,Volume),vol)Mod 
+      vtkImageMathematics Volume($LevelSets(GrayImage,Volume),vol)Mod
+# VTK 6 TODO
       Volume($LevelSets(GrayImage,Volume),vol)Mod  SetInput1 [Volume($LevelSets(GrayImage,Volume),vol) GetOutput]
       Volume($LevelSets(GrayImage,Volume),vol)Mod  SetInput2 [Volume(curve,1,resLineInv,vol) GetOutput] 
       Volume($LevelSets(GrayImage,Volume),vol)Mod  SetOperationToMultiply
@@ -1239,6 +1240,7 @@ proc LevelSetsInitialize_LevelWindowJoint { } {
         if {$ChanelListLength > 1 } { 
            vtkImageMathematics  Volume(curve,$CHAN,resLevelAdd,1)
            Volume(curve,$CHAN,resLevelAdd,1) SetOperationToAdd
+# VTK 6 TODO
            Volume(curve,$CHAN,resLevelAdd,1) SetInput1  [Volume(curve,All,resLevelProb) GetProbabilities [lindex $ListIndex 0]]  
            Volume(curve,$CHAN,resLevelAdd,1) SetInput2  [Volume(curve,All,resLevelProb) GetProbabilities [lindex $ListIndex 1]]  
            # Volume(curve,$CHAN,resLevelAdd,1) SetInput2  Volume(curve,[lindex $ListIndex 1],resLevel,vol)
@@ -1250,6 +1252,7 @@ proc LevelSetsInitialize_LevelWindowJoint { } {
            incr Index
            vtkImageMathematics  Volume(curve,$CHAN,resLevelAdd,$Index)
               Volume(curve,$CHAN,resLevelAdd,$Index) SetOperationToAdd
+ # VTK 6 TODO
              Volume(curve,$CHAN,resLevelAdd,$Index) SetInput1  [Volume(curve,$CHAN,resLevelAdd,[expr $Index -1]) GetOutput]
              Volume(curve,$CHAN,resLevelAdd,$Index) SetInput2  [Volume(curve,All,resLevelProb) GetProbabilities $ID]  
                      # Volume(curve,$ID,resLevel,vol)
@@ -1281,6 +1284,7 @@ proc LevelSetsInitialize_LevelWindowJoint { } {
               # Move min to zero
           vtkImageMathematics Volume(curve,$CHAN,resLevelMove) 
             Volume(curve,$CHAN,resLevelMove) SetOperationToAddConstant
+# VTK 6 TODO
             Volume(curve,$CHAN,resLevelMove) SetInput1  [Volume(curve,$CHAN,resLevelMax) GetOutput]
             Volume(curve,$CHAN,resLevelMove) SetConstantC [expr -1*$::LevelSets(LevelWindow,RangeMax)] 
           Volume(curve,$CHAN,resLevelMove) Update
@@ -1288,12 +1292,14 @@ proc LevelSetsInitialize_LevelWindowJoint { } {
               # Multiply 
           vtkImageMathematics Volume(curve,$CHAN,resLevelScale) 
             Volume(curve,$CHAN,resLevelScale) SetOperationToMultiplyByK
+# VTK 6 TODO
             Volume(curve,$CHAN,resLevelScale) SetInput1  [Volume(curve,$CHAN,resLevelMove) GetOutput]
             Volume(curve,$CHAN,resLevelScale) SetConstantK [expr 255/($::LevelSets(LevelWindow,RangeMin) - $::LevelSets(LevelWindow,RangeMax))] 
           Volume(curve,$CHAN,resLevelScale) Update
         } else {
           vtkImageMathematics Volume(curve,$CHAN,resLevelScale) 
             Volume(curve,$CHAN,resLevelScale) SetOperationToMultiplyByK
+# VTK 6 TODO
             Volume(curve,$CHAN,resLevelScale) SetInput1 $OUTPUT 
             Volume(curve,$CHAN,resLevelScale) SetConstantK 255
           Volume(curve,$CHAN,resLevelScale) Update

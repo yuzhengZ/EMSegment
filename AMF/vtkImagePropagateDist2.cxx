@@ -2294,6 +2294,6 @@ void vtkImagePropagateDist2::GetSkeleton( vtkImageData* skeleton)
 //----------------------------------------------------------------------
 void vtkImagePropagateDist2::PrintSelf(ostream& os, vtkIndent indent)
 {
-   vtkImageToImageFilter::PrintSelf(os,indent);
+   vtkImageAlgorithm::PrintSelf(os,indent);
 
 } // PrintSelf()

@@ -24,15 +24,15 @@ MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 #ifndef __vtkImageSumOverVoxels_h
 #define __vtkImageSumOverVoxels_h
 
-#include "vtkImageToImageFilter.h"
+#include "vtkImageAlgorithm.h"
 #include "vtkEMSegment.h"
 #include "vtkDoubleArray.h"
 
-class VTK_EMSEGMENT_EXPORT vtkImageSumOverVoxels : public vtkImageToImageFilter
+class VTK_EMSEGMENT_EXPORT vtkImageSumOverVoxels : public vtkImageAlgorithm
 {
   public:
   static vtkImageSumOverVoxels *New();
-  vtkTypeMacro(vtkImageSumOverVoxels,vtkImageToImageFilter);
+  vtkTypeMacro(vtkImageSumOverVoxels,vtkImageAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
   
   double GetVoxelSum() {return this->VoxelSum;}
@@ -53,8 +53,6 @@ protected:
   //  void ThreadedExecute(vtkImageData *inData, vtkImageData *outData,int outExt[6], int id);
   // If you do not want to have it multi threaded 
   void ExecuteData(vtkDataObject *);
-  void ExecuteInformation(){this->vtkImageToImageFilter::ExecuteInformation();};
-  void ExecuteInformation(vtkImageData *inData,vtkImageData *outData);
   void ComputeInputUpdateExtent(int inExt[6], int outExt[6]);
   
   double VoxelSum;

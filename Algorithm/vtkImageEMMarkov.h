@@ -18,7 +18,11 @@
 
 #include "vtkEMSegment.h"
 class vtkImageData;
-#include "vtkImageToImageFilter.h"
+#include "vtkImageAlgorithm.h"
+#include "vtkInformation.h"
+#include "vtkInformationVector.h"
+#include "vtkStreamingDemandDrivenPipeline.h"
+#include <vtkVersion.h>
 
 //#include <stdio.h>
 //#include <math.h>
@@ -37,11 +41,11 @@ class vtkImageData;
 
 
 
-class VTK_EMSEGMENT_EXPORT vtkImageEMMarkov : public vtkImageToImageFilter
+class VTK_EMSEGMENT_EXPORT vtkImageEMMarkov : public vtkImageAlgorithm
 {
   public:
   static vtkImageEMMarkov *New();
-  vtkTypeMacro(vtkImageEMMarkov,vtkImageToImageFilter);
+  vtkTypeMacro(vtkImageEMMarkov,vtkImageAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description:
@@ -106,8 +110,7 @@ protected:
   //  void ThreadedExecute(vtkImageData *inData, vtkImageData *outData,int outExt[6], int id);
   // If you do not want to have it multi threaded 
   void ExecuteData(vtkDataObject *);
-  void ExecuteInformation(){this->vtkImageToImageFilter::ExecuteInformation();};
-  void ExecuteInformation(vtkImageData *inData,vtkImageData *outData);
+  int RequestInformation(vtkInformation *, vtkInformationVector **, vtkInformationVector *);
   void ComputeInputUpdateExtent(int inExt[6], int outExt[6]);
 
   // Description:

@@ -59,7 +59,7 @@
 #define POINT_SET           4
 
 #include "vtkEMSegment.h"
-#include "vtkImageToImageFilter.h"
+#include "vtkImageAlgorithm.h"
 
 //BTX
 
@@ -149,11 +149,11 @@ class PD_element {
 
 //ETX
 
-class VTK_EMSEGMENT_EXPORT vtkImagePropagateDist : public vtkImageToImageFilter
+class VTK_EMSEGMENT_EXPORT vtkImagePropagateDist : public vtkImageAlgorithm
 {
 public:
   static vtkImagePropagateDist *New();
-  vtkTypeMacro(vtkImagePropagateDist,vtkImageToImageFilter);
+  vtkTypeMacro(vtkImagePropagateDist,vtkImageAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
   
   // Description

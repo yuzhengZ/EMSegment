@@ -750,6 +750,6 @@ void vtkImageIsoContourDist::IsoSurfDist3D_band( int first_band, int last_band)
 //----------------------------------------------------------------------
 void vtkImageIsoContourDist::PrintSelf(ostream& os, vtkIndent indent)
 {
-   vtkImageToImageFilter::PrintSelf(os,indent);
+   vtkImageAlgorithm::PrintSelf(os,indent);
 
 } // PrintSelf()

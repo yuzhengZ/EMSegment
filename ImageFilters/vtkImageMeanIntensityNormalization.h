@@ -17,18 +17,18 @@
 #define __vtkImageMeanIntensityNormalization_h
 
 
-#include "vtkImageToImageFilter.h"
+#include "vtkImageAlgorithm.h"
 #include "vtkImageAccumulate.h"
 #include "vtkEMSegment.h"
 
 #define INTENSITY_NORM_UNDEFINED 0
 #define INTENSITY_NORM_MEAN_MRI 1
 
-class VTK_EMSEGMENT_EXPORT vtkImageMeanIntensityNormalization : public vtkImageToImageFilter
+class VTK_EMSEGMENT_EXPORT vtkImageMeanIntensityNormalization : public vtkImageAlgorithm
 {
   public:
   static vtkImageMeanIntensityNormalization *New();
-  vtkTypeMacro(vtkImageMeanIntensityNormalization,vtkImageToImageFilter);
+  vtkTypeMacro(vtkImageMeanIntensityNormalization,vtkImageAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   vtkSetMacro(NormValue,double);
@@ -71,8 +71,6 @@ protected:
   //  void ThreadedExecute(vtkImageData *inData, vtkImageData *outData,int outExt[6], int id);
   // If you do not want to have it multi threaded 
   void ExecuteData(vtkDataObject *);
-  void ExecuteInformation(){this->vtkImageToImageFilter::ExecuteInformation();};
-  void ExecuteInformation(vtkImageData *inData,vtkImageData *outData);
   void ComputeInputUpdateExtent(int inExt[6], int outExt[6]);
 
   // Core function

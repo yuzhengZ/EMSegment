@@ -55,14 +55,14 @@
 #define _vtkImageFastSignedChamfer_h
 
 #include "vtkEMSegment.h"
-#include "vtkImageToImageFilter.h"
+#include "vtkImageAlgorithm.h"
 #include "vtkFloatArray.h"
 
-class VTK_EMSEGMENT_EXPORT vtkImageFastSignedChamfer : public vtkImageToImageFilter
+class VTK_EMSEGMENT_EXPORT vtkImageFastSignedChamfer : public vtkImageAlgorithm
 {
 public:
   static vtkImageFastSignedChamfer *New();
-  vtkTypeMacro(vtkImageFastSignedChamfer,vtkImageToImageFilter);
+  vtkTypeMacro(vtkImageFastSignedChamfer,vtkImageAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
   
   // Description

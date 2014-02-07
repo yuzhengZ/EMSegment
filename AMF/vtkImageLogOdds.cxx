@@ -392,7 +392,7 @@ void vtkImageLogOdds::ExecuteData(vtkDataObject *)
    // Initial Check
    assert(this->Mode);
 
-   int NumInputs = this->vtkProcessObject::GetNumberOfInputs();
+   int NumInputs = this->GetNumberOfInputPorts();
 
    if(!NumInputs) {
     vtkErrorMacro(<<"No input!");
@@ -404,11 +404,11 @@ void vtkImageLogOdds::ExecuteData(vtkDataObject *)
   assert((NumInputs == this->DimInput) || ((NumInputs == 1) && (this->DimInput == 2) && (this->Mode ==  LOGODDS_PROB2LOG)));
 
 
-  // Redefine ImageRelatedClass Parameters   
-  vtkImageData **inData  = (vtkImageData **) this->GetInputs();
+  // Redefine ImageRelatedClass Parameters
+  vtkImageData *inData0 = (vtkImageData *) this->GetInput(0);
   { 
     int Ext[6];
-    inData[0]->GetWholeExtent(Ext);
+    inData0->GetWholeExtent(Ext);
     this->XDim= Ext[1] - Ext[0] + 1;
     this->YDim= Ext[3] - Ext[2] + 1;
     this->ZDim= Ext[5] - Ext[4] + 1;
@@ -420,7 +420,7 @@ void vtkImageLogOdds::ExecuteData(vtkDataObject *)
     this->InputScalarType = VTK_FLOAT; 
   }
   for (int i = 0; i < NumInputs; i++) {
-    if (this->CheckInput(inData[i])) return;
+      if (this->CheckInput(vtkImageData::SafeDownCast(this->GetInput(i)))) return;
   }
 
   // -----------------------------------------------

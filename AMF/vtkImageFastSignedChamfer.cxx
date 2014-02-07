@@ -1009,6 +1009,6 @@ void vtkImageFastSignedChamfer::FastSignedChamfer3DBorders( )
 //----------------------------------------------------------------------
 void vtkImageFastSignedChamfer::PrintSelf(ostream& os, vtkIndent indent)
 {
-   vtkImageToImageFilter::PrintSelf(os,indent);
+   vtkImageAlgorithm::PrintSelf(os,indent);
 
 } // PrintSelf()

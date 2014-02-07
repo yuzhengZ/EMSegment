@@ -27,7 +27,7 @@ MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 #define __vtkImageLogOdds_h 
   
 #include <vtkEMSegment.h> 
-#include "vtkImageMultipleInputFilter.h"
+#include "vtkImageAlgorithm.h"
 #include <vector> 
 
 // Modes of operating this filter
@@ -50,7 +50,7 @@ MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  
 typedef std::vector<int> labelListType;
 
-class VTK_EMSEGMENT_EXPORT vtkImageLogOdds : public vtkImageMultipleInputFilter
+class VTK_EMSEGMENT_EXPORT vtkImageLogOdds : public vtkImageAlgorithm
 {
   public:
   // -----------------------------------------------------

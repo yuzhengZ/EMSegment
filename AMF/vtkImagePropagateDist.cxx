@@ -1464,6 +1464,6 @@ void vtkImagePropagateDist::SaveDistance( int num)
 //----------------------------------------------------------------------
 void vtkImagePropagateDist::PrintSelf(ostream& os, vtkIndent indent)
 {
-   vtkImageToImageFilter::PrintSelf(os,indent);
+   vtkImageAlgorithm::PrintSelf(os,indent);
 
 } // PrintSelf()

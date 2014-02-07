@@ -58,8 +58,12 @@ void vtkImageEMMarkov::PrintSelf(ostream& os, vtkIndent indent)
 
 // To chage anything about output us this executed before Thread
 //----------------------------------------------------------------------------
-void vtkImageEMMarkov::ExecuteInformation(vtkImageData *inData, vtkImageData *outData) 
-{
+int vtkImageEMMarkov::RequestInformation(
+  vtkInformation * vtkNotUsed(request),
+  vtkInformationVector **vtkNotUsed(inputVector),
+  vtkInformationVector *outputVector)
+ {
+  vtkInformation* outInfo = outputVector->GetInformationObject(0);
   
   int ext[6];
   vtkFloatingPointType spacing[3], origin[3];
@@ -71,17 +75,16 @@ void vtkImageEMMarkov::ExecuteInformation(vtkImageData *inData, vtkImageData *ou
   origin[1] = 0.0;
   origin[2] = 0.0;
 
-
-  // Check if extend is sset correctly 
+  // Check if extend is sset correctly
   ext[0] = ext[2] = ext[4] = 0;
   ext[1] = ext[3] = this->NumClasses-1;
   ext[5] = 5;
-   
-  outData->SetOrigin(origin);
-  outData->SetNumberOfScalarComponents(1);
-  outData->SetWholeExtent(ext);
-  outData->SetSpacing(spacing);
-  outData->SetScalarType(VTK_FLOAT);
+
+  outInfo->Set(vtkDataObject::ORIGIN(), origin, 3);
+  outInfo->Set(vtkDataObject::SPACING(), spacing, 3);
+  outInfo->Set(vtkStreamingDemandDrivenPipeline::WHOLE_EXTENT(), ext, 6);
+  vtkDataObject::SetPointDataActiveScalarInfo(outInfo, VTK_FLOAT, 1);
+  return 1;
 }
 
 

@@ -60,7 +60,7 @@
 #define POINT_SET           4
 
 #include "vtkEMSegment.h"
-#include "vtkImageToImageFilter.h"
+#include "vtkImageAlgorithm.h"
 #include "vtkFloatArray.h"
 
 //BTX
@@ -176,11 +176,11 @@ const float& sqd)
 
 //ETX
 
-class VTK_EMSEGMENT_EXPORT vtkImagePropagateDist2 : public vtkImageToImageFilter
+class VTK_EMSEGMENT_EXPORT vtkImagePropagateDist2 : public vtkImageAlgorithm
 {
 public:
   static vtkImagePropagateDist2 *New();
-  vtkTypeMacro(vtkImagePropagateDist2,vtkImageToImageFilter);
+  vtkTypeMacro(vtkImagePropagateDist2,vtkImageAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
   
   // Description

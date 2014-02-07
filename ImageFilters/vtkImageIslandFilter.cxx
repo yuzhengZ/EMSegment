@@ -430,16 +430,6 @@ void vtkImageIslandFilter::PrintSelf(ostream& vtkNotUsed(os), vtkIndent vtkNotUs
 {
 }
 
-// To chage anything about output us this executed before Thread
-//----------------------------------------------------------------------------
-void vtkImageIslandFilter::ExecuteInformation(vtkImageData *inData, vtkImageData *outData) 
-{
-  outData->SetOrigin(inData->GetOrigin());
-  outData->SetNumberOfScalarComponents(1);
-  outData->SetWholeExtent(inData->GetWholeExtent());
-  outData->SetSpacing(inData->GetSpacing());
-  outData->SetScalarType(inData->GetScalarType());
-}
 //----------------------------------------------------------------------------
 template <class T>
 static void vtkImageIslandFilter_FindIslands(int* Checked,int index,int & IslandSize,T Label, int ID, T* inPtr, int const SizeX, int const SizeY, int const SizeXY, int const SizeZ, EMStack<int> *Stack) {

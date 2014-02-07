@@ -21,7 +21,7 @@
 #define __vtkImageEMGenericClass_h 
   
 #include "vtkEMSegment.h"
-#include "vtkImageMultipleInputFilter.h"
+#include "vtkImageAlgorithm.h"
 #include "vtkImageEMGeneral.h"
 
 // #ifndef EM_VTK_OLD_SETTINGS
@@ -32,7 +32,7 @@
 // #endif
 // #endif
 
-class VTK_EMSEGMENT_EXPORT vtkImageEMGenericClass : public vtkImageMultipleInputFilter
+class VTK_EMSEGMENT_EXPORT vtkImageEMGenericClass : public vtkImageAlgorithm
 {
   public:
   // -----------------------------------------------------

@@ -56,7 +56,7 @@ ClientData vtkImageFastSignedChamferNewCommand()
   return ((ClientData)temp);
 }
 
-int vtkImageToImageFilterCppCommand(vtkImageToImageFilter *op, Tcl_Interp *interp,
+int vtkImageAlgorithmCppCommand(vtkImageAlgorithm *op, Tcl_Interp *interp,
              int argc, char *argv[]);
 int VTKTCL_EXPORT vtkImageFastSignedChamferCppCommand(vtkImageFastSignedChamfer *op, Tcl_Interp *interp,
              int argc, char *argv[]);
@@ -99,7 +99,7 @@ int VTKTCL_EXPORT vtkImageFastSignedChamferCppCommand(vtkImageFastSignedChamfer 
         argv[2] = (char *)((void *)op);
         return TCL_OK;
         }
-      if (vtkImageToImageFilterCppCommand((vtkImageToImageFilter *)op,interp,argc,argv) == TCL_OK)
+      if (vtkImageAlgorithmCppCommand((vtkImageAlgorithm *)op,interp,argc,argv) == TCL_OK)
         {
         return TCL_OK;
         }
@@ -109,7 +109,7 @@ int VTKTCL_EXPORT vtkImageFastSignedChamferCppCommand(vtkImageFastSignedChamfer 
 
   if (!strcmp("GetSuperClassName",argv[1]))
     {
-    Tcl_SetResult(interp,(char *) "vtkImageToImageFilter", TCL_VOLATILE);
+    Tcl_SetResult(interp,(char *) "vtkImageAlgorithm", TCL_VOLATILE);
     return TCL_OK;
     }
 
@@ -325,7 +325,7 @@ int VTKTCL_EXPORT vtkImageFastSignedChamferCppCommand(vtkImageFastSignedChamfer 
 
   if (!strcmp("ListMethods",argv[1]))
     {
-    vtkImageToImageFilterCppCommand(op,interp,argc,argv);
+    vtkImageAlgorithmCppCommand(op,interp,argc,argv);
     Tcl_AppendResult(interp,"Methods from vtkImageFastSignedChamfer:\n",NULL);
     Tcl_AppendResult(interp,"  GetSuperClassName\n",NULL);
     Tcl_AppendResult(interp,"  New\n",NULL);
@@ -345,7 +345,7 @@ int VTKTCL_EXPORT vtkImageFastSignedChamferCppCommand(vtkImageFastSignedChamfer 
     return TCL_OK;
     }
 
-  if (vtkImageToImageFilterCppCommand((vtkImageToImageFilter *)op,interp,argc,argv) == TCL_OK)
+  if (vtkImageAlgorithmCppCommand((vtkImageAlgorithm *)op,interp,argc,argv) == TCL_OK)
     {
     return TCL_OK;
     }

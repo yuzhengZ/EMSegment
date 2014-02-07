@@ -239,11 +239,11 @@ void vtkImageMultiLevelSets::SetCurve(int initID, vtkImageLevelSets  *initWithou
 //----------------------------------------------------------------------------
 int vtkImageMultiLevelSets::InitParam()
 {   
-   vtkImageData **inData  = (vtkImageData **) this->GetInputs();
+   vtkImageData *inData0  = (vtkImageData *) this->GetInput(0);
    int Ext[6];
  
-   assert(inData[0]);
-   inData[0]->GetWholeExtent(Ext);
+   assert(inData0);
+   inData0->GetWholeExtent(Ext);
    this->XDim= Ext[1] - Ext[0] + 1;
    this->YDim= Ext[3] - Ext[2] + 1;
    this->ZDim= Ext[5] - Ext[4] + 1;
@@ -281,7 +281,7 @@ int vtkImageMultiLevelSets::InitParam()
 }
 
 int vtkImageMultiLevelSets::InitEvolution() {
-  assert(this->vtkProcessObject::GetNumberOfInputs()== this->NumberOfCurves && this->NumberOfCurves);
+  assert(this->GetNumberOfInputPorts()== this->NumberOfCurves && this->NumberOfCurves);
    vtkImageData **inData  = (vtkImageData **) this->GetInputs();
   
   for (int i=0; i < this->NumberOfCurves; i++) {

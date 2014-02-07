@@ -93,7 +93,7 @@ vtkImageEMGenericClass::vtkImageEMGenericClass()
 
 //----------------------------------------------------------------------------
 void vtkImageEMGenericClass::PrintSelf(ostream& os,vtkIndent indent) {
-  // this->vtkImageMultipleInputFilter::PrintSelf(os,indent);
+  // this->vtkImageAlgorithm::PrintSelf(os,indent);
   os << indent << "Label:                   " << this->Label << endl;
   os << indent << "NumInputImages:          " << this->NumInputImages << endl;
   os << indent << "Tissue Probability:      " << this->TissueProbability <<endl;

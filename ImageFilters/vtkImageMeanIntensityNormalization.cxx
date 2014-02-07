@@ -298,17 +298,6 @@ void vtkImageMeanIntensityNormalization::MeanMRI(vtkImageData *Input, vtkImageDa
 }
 
 
-// To chage anything about output us this executed before Thread
-//----------------------------------------------------------------------------
-void vtkImageMeanIntensityNormalization::ExecuteInformation(vtkImageData *inData, vtkImageData *outData) 
-{
-  outData->SetOrigin(inData->GetOrigin());
-  outData->SetNumberOfScalarComponents(1);
-  outData->SetWholeExtent(inData->GetWholeExtent());
-  outData->SetSpacing(inData->GetSpacing());
-  outData->SetScalarType(inData->GetScalarType());
-}
-
 //----------------------------------------------------------------------------
 // This method is passed a input and output datas, and executes the filter
 // algorithm to fill the output from the inputs.

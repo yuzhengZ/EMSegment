@@ -25,7 +25,7 @@
 #ifndef __vtkImageEMGeneral_h
 #define __vtkImageEMGeneral_h
 #include "vtkEMSegment.h"
-#include "vtkImageMultipleInputFilter.h"
+#include "vtkImageAlgorithm.h"
 class vtkImageData;
 class vtkImageReader;
 // Just made for vtkImageEMGeneral and its kids
@@ -206,7 +206,7 @@ private:
 
 
 //ETX
-class VTK_EMSEGMENT_EXPORT vtkImageEMGeneral : public vtkImageMultipleInputFilter
+class VTK_EMSEGMENT_EXPORT vtkImageEMGeneral : public vtkImageAlgorithm
 {
   public:
   // -------------------------------

@@ -70,7 +70,7 @@ void vtkImageEMLocalGenericClass::SetRegistrationCovariance(double Init[9]) {
 
 //----------------------------------------------------------------------------
 void vtkImageEMLocalGenericClass::PrintSelf(ostream& os,vtkIndent indent) {
-  // this->vtkImageMultipleInputFilter::PrintSelf(os,indent);
+  // this->vtkImageAlgorithm::PrintSelf(os,indent);
   this->vtkImageEMGenericClass::PrintSelf(os,indent);
   os << indent << "ProbImageData:           " ;
   if (this->ProbImageData) { 
@@ -232,7 +232,7 @@ void  vtkImageEMLocalGenericClass::ExecuteData(vtkDataObject*) {
     // -----------------------------------------------------    
     // Define General ImageDataSettings
     // First input (input[0]) is a fake 
-    int NumberOfRealInputData = this->vtkProcessObject::GetNumberOfInputs() -1;
+    int NumberOfRealInputData = this->GetNumberOfInputPorts() -1;
     if (NumberOfRealInputData == 0) { return; }  
 
     vtkImageData **inData  = (vtkImageData **) this->GetInputs();
@@ -240,7 +240,7 @@ void  vtkImageEMLocalGenericClass::ExecuteData(vtkDataObject*) {
     while (FirstData <= NumberOfRealInputData && !inData[FirstData])  FirstData++;
     if (FirstData > NumberOfRealInputData) {
       // This error should not be possible 
-      vtkEMAddErrorMessage("No image data defined as input even though vtkProcessObject::GetNumberOfInputs > 0 !");
+      vtkEMAddErrorMessage("No image data defined as input even though vtkAlgorithm::GetNumberOfInputPorts > 0 !");
       return;
     }
     inData[FirstData]->GetWholeExtent(this->Extent);

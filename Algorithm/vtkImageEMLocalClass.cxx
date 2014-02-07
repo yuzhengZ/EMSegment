@@ -287,7 +287,7 @@ void vtkImageEMLocalClass::ExecuteData(vtkDataObject *)
 
    // First input (input[0]) is a fake 
 
-   int NumberOfRealInputData = this->vtkProcessObject::GetNumberOfInputs() -1;
+   int NumberOfRealInputData = this->GetNumberOfInputPorts() -1;
    if (this->PCANumberOfEigenModes && (this->PCANumberOfEigenModes + 2 > NumberOfRealInputData )) {
       vtkEMAddErrorMessage("Number of Eingemodes is "<< this->PCANumberOfEigenModes << " but only " << NumberOfRealInputData -2 << " were defined!" );
       return;

@@ -320,17 +320,21 @@ void vtkImageGraph::ChangeColorOfIndirectLookupTable(vtkIndirectLookupTable* Tab
   Table->Build();
 }
 //----------------------------------------------------------------------------
-void vtkImageGraph::ExecuteInformation()
-{
-  vtkImageData *output = this->GetOutput();
+int vtkImageGraph::RequestInformation(
+  vtkInformation * vtkNotUsed(request),
+  vtkInformationVector **vtkNotUsed(inputVector),
+  vtkInformationVector *outputVector)
+ {
+  vtkInformation* outInfo = outputVector->GetInformationObject(0);
+
   int Extent[6];
   Extent[0] = Extent[2] = Extent[4] = Extent[5] = 0;
-  Extent[1] = this->Xlength - 1; 
+  Extent[1] = this->Xlength - 1;
   Extent[3] = this->Ylength - 1;
 
-  output->SetWholeExtent(Extent);
-  output->SetScalarType(VTK_UNSIGNED_CHAR);
-  output->SetNumberOfScalarComponents(3);
+  outInfo->Set(vtkStreamingDemandDrivenPipeline::WHOLE_EXTENT(), Extent, 6);
+  vtkDataObject::SetPointDataActiveScalarInfo(outInfo, VTK_UNSIGNED_CHAR, 3);
+  return 1;
 }
 //----------------------------------------------------------------------------
 template <class Tin> 

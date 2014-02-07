@@ -422,7 +422,7 @@ int vtkImageCurveRegion::RequestInformation (
   if (this->Function == 3 ) {
     FILE *f = fopen(this->FileName,"r");
     if ( f == NULL ) {
-      cerr << "vtkImageCurveRegion::ExecuteInformation: Could not open file " << this->FileName << "\n";
+      cerr << "vtkImageCurveRegion::RequestInformation: Could not open file " << this->FileName << "\n";
       fclose(f);
       return 0 ;
     }
@@ -431,7 +431,7 @@ int vtkImageCurveRegion::RequestInformation (
     bool flag = false;
     char *line = new char[MaxLength];
     if (feof(f) || fgets(line, MaxLength, f ) == NULL) {
-      cout << "vtkImageCurveRegion::ExecuteInformation: Error : File was empty !" << endl;
+      cout << "vtkImageCurveRegion::RequestInformation: Error : File was empty !" << endl;
       fclose(f);
       delete[] line;
       return 0 ;

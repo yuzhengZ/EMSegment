@@ -29,7 +29,7 @@
 
 #include <vtkEMSegment.h>
 #include "vtkImageData.h"
-#include "vtkImageToImageFilter.h"
+#include "vtkImageAlgorithm.h"
 
 #include "vtkLevelSets.h"
 #include "vtkLevelSetFastMarching.h"
@@ -41,11 +41,11 @@
 #define DISTMAP_LOGODDS      4
 
 
-class VTK_EMSEGMENT_EXPORT vtkImageLevelSets : public vtkImageToImageFilter
+class VTK_EMSEGMENT_EXPORT vtkImageLevelSets : public vtkImageAlgorithm
 {
 public:
   static vtkImageLevelSets *New();
-  vtkTypeMacro(vtkImageLevelSets,vtkImageToImageFilter);
+  vtkTypeMacro(vtkImageLevelSets,vtkImageAlgorithm);
   void PrintSelf(ostream& vtkNotUsed(os), vtkIndent vtkNotUsed(indent));
   
   vtkSetMacro(isotropic_voxels,int);
@@ -391,7 +391,7 @@ protected:
 
   //void          ExecuteInformation()
   //  {
-  //    this->vtkImageToImageFilter::ExecuteInformation();
+  //    this->vtkImageAlgorithm::ExecuteInformation();
   //  };
 
   void PreComputeDataAttachment();

@@ -56,7 +56,7 @@
 #include "vtkEMSegment.h"
 #include "vtkPointData.h"
 #include "vtkImageData.h"
-#include "vtkImageToImageFilter.h"
+#include "vtkImageAlgorithm.h"
 
 
 //BTX
@@ -158,10 +158,10 @@ public:
 //ETX
 
 //----------------------------------------------------------------------
-class VTK_EXPORT vtkLevelSetFastMarching : public vtkImageToImageFilter
+class VTK_EXPORT vtkLevelSetFastMarching : public vtkImageAlgorithm
 {
 public:
-  vtkTypeMacro(vtkLevelSetFastMarching,vtkImageToImageFilter);
+  vtkTypeMacro(vtkLevelSetFastMarching,vtkImageAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description:

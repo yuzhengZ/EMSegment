@@ -27,12 +27,12 @@ MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 #define __vtkImageMultiLevelSets_h 
   
 #include <vtkEMSegment.h> 
-#include "vtkImageMultipleInputFilter.h"
+#include "vtkImageAlgorithm.h"
 #include "vtkImageLevelSets.h" 
 #include "assert.h"
 
 
-class VTK_EMSEGMENT_EXPORT vtkImageMultiLevelSets : public vtkImageMultipleInputFilter
+class VTK_EMSEGMENT_EXPORT vtkImageMultiLevelSets : public vtkImageAlgorithm
 {
   public:
   // -----------------------------------------------------

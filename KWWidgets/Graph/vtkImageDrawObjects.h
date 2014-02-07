@@ -19,7 +19,7 @@
 #ifndef __vtkImageDrawObjects_h
 #define __vtkImageDrawObjects_h
 
-#include "vtkImageToImageFilter.h"
+#include "vtkImageAlgorithm.h"
 #include "vtkImageGraph.h" // For GraphList
 #include "vtkEMSegmentStep.h"
 
@@ -52,11 +52,11 @@ protected:
 //ETX
 
 class vtkDataObject;
-class  VTK_EMSEGMENT_EXPORT vtkImageDrawObjects : public vtkImageToImageFilter
+class  VTK_EMSEGMENT_EXPORT vtkImageDrawObjects : public vtkImageAlgorithm
 { 
 public:
   static vtkImageDrawObjects *New();
-  vtkTypeMacro(vtkImageDrawObjects,vtkImageToImageFilter);
+  vtkTypeMacro(vtkImageDrawObjects,vtkImageAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description:
@@ -87,7 +87,7 @@ protected:
   ~vtkImageDrawObjects() {};
 
   //void ExecuteInformation(vtkImageData *inData, vtkImageData *outData);
-  // void ExecuteInformation() {this->vtkImageToImageFilter::ExecuteInformation(); };
+  // void ExecuteInformation() {this->vtkImageAlgorithm::ExecuteInformation(); };
   void ExecuteData(vtkDataObject *data);
 
   ObjectList List; 

@@ -55,14 +55,14 @@
 #define _vtkImageIsoContourDist_h
 
 #include "vtkEMSegment.h"
-#include "vtkImageToImageFilter.h"
+#include "vtkImageAlgorithm.h"
 #include "vtkFloatArray.h"
 
-class VTK_EMSEGMENT_EXPORT vtkImageIsoContourDist : public vtkImageToImageFilter
+class VTK_EMSEGMENT_EXPORT vtkImageIsoContourDist : public vtkImageAlgorithm
 {
 public:
   static vtkImageIsoContourDist *New();
-  vtkTypeMacro(vtkImageIsoContourDist,vtkImageToImageFilter);
+  vtkTypeMacro(vtkImageIsoContourDist,vtkImageAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
   
   // Description

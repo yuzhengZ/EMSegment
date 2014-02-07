@@ -3780,7 +3780,7 @@ void vtkLevelSets::PrintParameters()
 //----------------------------------------------------------------------
 void vtkLevelSets::PrintSelf(ostream& os, vtkIndent indent)
 {
-   vtkImageToImageFilter::PrintSelf(os,indent);
+   vtkImageAlgorithm::PrintSelf(os,indent);
    os << indent << "RescaleImage: "         << this->RescaleImage     << "\n";
    os << indent << "Initial threshold: "    << this->InitThreshold    << "\n";
    os << indent << "Band around isoline: "  << this->Band             << "\n";

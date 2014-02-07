@@ -72,20 +72,6 @@ void VolumeFlipXAxis(T *invec, T *outvec, int XSize, int YSize, int ZSize, int X
      } 
 
 }
-//----------------------------------------------------------------------------
-void vtkImageSumOverVoxels::ExecuteInformation(vtkImageData *inData, vtkImageData *outData) 
-{
-  // Currently filter is setup so input and output have the same dimension 
-  // The code itself does not require it - they can have different dimension 
-  // so just update it if you need it - just did not have time for it  
-  outData->SetOrigin(inData->GetOrigin());
-  outData->SetNumberOfScalarComponents(1);
-  outData->SetWholeExtent(inData->GetWholeExtent());
-  outData->SetSpacing(inData->GetSpacing());
-  outData->SetScalarType(inData->GetScalarType());
-}
-
-
 
 template <class T>  
 void AddVoxels(T* Ptr, vtkIdType inInc[3], int Dim[3], int CentroidFlag, double & result, double *centroid) {

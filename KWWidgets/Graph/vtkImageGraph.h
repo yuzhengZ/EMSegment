@@ -144,7 +144,7 @@ protected:
   vtkImageGraph();
   void DeleteVariables();
   ~vtkImageGraph() {this->DeleteVariables();};
-  virtual void ExecuteInformation();
+  virtual int RequestInformation(vtkInformation *, vtkInformationVector **, vtkInformationVector *);
   virtual void ExecuteData(vtkDataObject *data);
 
   void Draw1DGraph(vtkImageData *data);

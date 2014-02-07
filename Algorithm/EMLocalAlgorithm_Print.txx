@@ -54,9 +54,13 @@ inline void EMLocalAlgorithm_TransfereTranRotSca_ToRegistrationParameter(double 
 void* EMLocalAlgorithm_GetPointerToVtkImageData(vtkImageData *Image, int DataType, int Ext[6]) {
  Image->SetWholeExtent(Ext);
  Image->SetExtent(Ext); 
+#if (VTK_MAJOR_VERSION <= 5)
  Image->SetNumberOfScalarComponents(1);
- Image->SetScalarType(DataType); 
- Image->AllocateScalars(); 
+ Image->SetScalarType(DataType);
+ Image->AllocateScalars();
+#else
+ Image->AllocateScalars(DataType, 1);
+#endif
  return Image->GetScalarPointerForExtent(Ext);
 }
 

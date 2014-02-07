@@ -406,14 +406,18 @@ void vtkLevelSets::DistanceMap()
     float* ptr;
     char name[255];
     int  i;
-    
-    copyImage->SetScalarType( VTK_FLOAT);
-    copyImage->SetNumberOfScalarComponents(1);
+
     copyImage->SetDimensions( outputImage->GetDimensions());
     copyImage->SetOrigin(     outputImage->GetOrigin());
     copyImage->SetSpacing(    outputImage->GetSpacing());
     
+#if (VTK_MAJOR_VERSION <= 5)
+    copyImage->SetScalarType( VTK_FLOAT);
+    copyImage->SetNumberOfScalarComponents(1);
     copyImage->AllocateScalars();
+#else
+    copyImage->AllocateScalars(VTK_FLOAT, 1);
+#endif
     //     copyImage->CopyAndCastFrom(outputImage,
     //                outputImage->GetExtent());
     
@@ -463,14 +467,18 @@ void vtkLevelSets::DistanceMap()
     float* ptr;
     char name[255];
     int  i;
-    
-    copyImage->SetScalarType( VTK_FLOAT);
-    copyImage->SetNumberOfScalarComponents(1);
+
     copyImage->SetDimensions( outputImage->GetDimensions());
     copyImage->SetOrigin(     outputImage->GetOrigin());
     copyImage->SetSpacing(    outputImage->GetSpacing());
     
+#if (VTK_MAJOR_VERSION <= 5)
+    copyImage->SetScalarType( VTK_FLOAT);
+    copyImage->SetNumberOfScalarComponents(1);
     copyImage->AllocateScalars();
+#else
+    copyImage->AllocateScalars(VTK_FLOAT, 1);
+#endif
     //     copyImage->CopyAndCastFrom(outputImage,
     //                outputImage->GetExtent());
     
@@ -1725,9 +1733,13 @@ void vtkLevelSets::InitParam( vtkImageData* input, vtkImageData* output)
     
     outputImage->SetDimensions(inputImage->GetDimensions() );
     outputImage->SetSpacing(   inputImage->GetSpacing() );
-    outputImage->SetScalarType(VTK_FLOAT); 
+#if (VTK_MAJOR_VERSION <= 5)
+    outputImage->SetScalarType( VTK_FLOAT);
     outputImage->SetNumberOfScalarComponents(1);
     outputImage->AllocateScalars();
+#else
+    outputImage->AllocateScalars(VTK_FLOAT, 1);
+#endif
     outputImage->CopyAndCastFrom(this->inputImage,
                                  this->inputImage->GetExtent());
 
@@ -3373,14 +3385,17 @@ void vtkLevelSets::PreComputeDataAttachment()
     float* ptr;
     char name[255];
     int  i;
-    
-    copyImage->SetScalarType( VTK_FLOAT);
-    copyImage->SetNumberOfScalarComponents(1);
+
     copyImage->SetDimensions( outputImage->GetDimensions());
     copyImage->SetOrigin(     outputImage->GetOrigin());
     copyImage->SetSpacing(    outputImage->GetSpacing());
-    
+#if (VTK_MAJOR_VERSION <= 5)
+    copyImage->SetScalarType( VTK_FLOAT);
+    copyImage->SetNumberOfScalarComponents(1);
     copyImage->AllocateScalars();
+#else
+    copyImage->AllocateScalars(VTK_FLOAT, 1);
+#endif
     
     ptr = (float*) copyImage->GetScalarPointer();
     for(i=0;i<this->imsize;i++) {

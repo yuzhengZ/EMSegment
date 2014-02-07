@@ -52,6 +52,7 @@
 #include "vtkPointData.h"
 #include "vtkImageData.h"
 #include "vtkStructuredPointsWriter.h"
+#include <vtkVersion.h>
 
 #define TRUE    1
 #define FALSE   0
@@ -177,9 +178,10 @@ void vtkImageIsoContourDist::InitParam( )
       
     outputImage->SetDimensions(inputImage->GetDimensions() );
     outputImage->SetSpacing(   inputImage->GetSpacing() );
+#if (VTK_MAJOR_VERSION <= 5)
     outputImage->SetScalarType(VTK_FLOAT); 
     outputImage->SetNumberOfScalarComponents(1);
-     
+#endif
     
     if (output_array != NULL) {
       if (float_array_allocated) {
@@ -193,7 +195,11 @@ void vtkImageIsoContourDist::InitParam( )
       outputImage->GetPointData()->SetScalars(float_array);
     } 
     else {
+#if (VTK_MAJOR_VERSION <= 5)
       outputImage->AllocateScalars();
+#else
+      outputImage->AllocateScalars(VTK_FLOAT, 1);
+#endif
     }
     
     if (output_array == NULL) {

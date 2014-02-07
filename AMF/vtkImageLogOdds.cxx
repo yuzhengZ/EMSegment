@@ -24,6 +24,7 @@ MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 #include "vtkImageLogOdds.h"
 #include "vtkObjectFactory.h"
 #include "vtkImageData.h"
+#include <vtkVersion.h>
 #include "assert.h"
 
 //------------------------------------------------------------------------
@@ -333,6 +334,7 @@ void  vtkImageLogOdds::InitializeOutputs()
   for (int i=0; i < this->DimOutput; i++) {
     this->results[i]->SetWholeExtent(Ext);
     this->results[i]->SetExtent(Ext); 
+#if (VTK_MAJOR_VERSION <= 5)
     this->results[i]->SetNumberOfScalarComponents(1);
     // Can be easily changed if needed
     if (this->Mode != LOGODDS_LOG2MAP ) {
@@ -341,6 +343,10 @@ void  vtkImageLogOdds::InitializeOutputs()
       this->results[i]->SetScalarType(VTK_SHORT);
     }
     this->results[i]->AllocateScalars(); 
+#else
+    int dataType = (this->Mode != LOGODDS_LOG2MAP) ? VTK_FLOAT : VTK_SHORT;
+    this->results[i]->AllocateScalars(dataType, 1);
+#endif
 
     this->results[i]->GetContinuousIncrements(Ext,IncX,IncY,IncZ);
     // Can be easily changed 

@@ -50,6 +50,7 @@
 #include "vtkPointData.h"
 #include "vtkImageData.h"
 #include "vtkFloatArray.h"
+#include <vtkVersion.h>
 
 #define TRUE    1
 #define FALSE   0
@@ -174,8 +175,10 @@ void vtkImageFastSignedChamfer::InitParam( vtkImageData* input, vtkImageData* ou
     
     outputImage->SetDimensions(inputImage->GetDimensions() );
     outputImage->SetSpacing(   inputImage->GetSpacing() );
+#if (VTK_MAJOR_VERSION <= 5)
     outputImage->SetScalarType(VTK_FLOAT); 
     outputImage->SetNumberOfScalarComponents(1);
+#endif
 
     if (input_output_array != NULL) {
       local_floatarray = vtkFloatArray::New();
@@ -183,7 +186,11 @@ void vtkImageFastSignedChamfer::InitParam( vtkImageData* input, vtkImageData* ou
       outputImage->GetPointData()->SetScalars(local_floatarray);
     } 
     else {
+#if (VTK_MAJOR_VERSION <= 5)
       outputImage->AllocateScalars();
+#else
+      outputImage->AllocateScalars(VTK_FLOAT, 1);
+#endif
     }
 
     //    outputImage->CopyAndCastFrom(this->inputImage,

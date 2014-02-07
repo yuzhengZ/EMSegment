@@ -1648,9 +1648,13 @@ vtkImageData* EMLocalAlgorithm<T>::reconstructImage(float** InputVector, int Inp
   vtkImageData* data = vtkImageData::New();
   data->SetDimensions(this->RealMaxX, this->RealMaxY, this->RealMaxZ);
   data->SetSpacing(1,1,1);
-  data->SetScalarType(VTK_FLOAT);
+#if (VTK_MAJOR_VERSION <= 5)
+  data->SetScalarType( VTK_FLOAT);
   data->SetNumberOfScalarComponents(1);
   data->AllocateScalars();
+#else
+  data->AllocateScalars(VTK_FLOAT, 1);
+#endif
 
   int index = 0;
   float* in1Ptr = (float*)data->GetScalarPointer();

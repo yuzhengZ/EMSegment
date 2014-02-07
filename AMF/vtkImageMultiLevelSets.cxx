@@ -25,6 +25,7 @@ MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 #include "vtkObjectFactory.h"
 #include "vtkImageData.h"
 #include "vtkMultiThreader.h"
+#include <vtkVersion.h>
 
 //---------------------------------------------------------------------------
 VTK_THREAD_RETURN_TYPE vtkImageMultiLevelSets_ComputeLogOddsComponent_Threaded(void *arg )
@@ -263,9 +264,13 @@ int vtkImageMultiLevelSets::InitParam()
    for (int i=0; i < this->NumberOfCurves; i++) {
      this->CurvesOutputComplete[i]->SetWholeExtent(Ext);
      this->CurvesOutputComplete[i]->SetExtent(Ext); 
+#if (VTK_MAJOR_VERSION <= 5)
      this->CurvesOutputComplete[i]->SetNumberOfScalarComponents(1);
      this->CurvesOutputComplete[i]->SetScalarType(VTK_FLOAT);
      this->CurvesOutputComplete[i]->AllocateScalars();
+#else
+       this->CurvesOutputComplete[i]->AllocateScalars(VTK_FLOAT, 1);
+#endif
      this->CurvesOutputComplete[i]->GetContinuousIncrements(Ext,IncX,IncY,IncZ);
 
     // Can be easily changed 

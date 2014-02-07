@@ -186,11 +186,13 @@ void vtkImagePropagateDist2::InitParam( vtkImageData* input, vtkImageData* outpu
                                                       
     //--- outputImage
     outputImage      = output;
-    
+
     outputImage->SetDimensions(inputImage->GetDimensions() );
     outputImage->SetSpacing(   inputImage->GetSpacing() );
+#if (VTK_MAJOR_VERSION <= 5)
     outputImage->SetScalarType(VTK_FLOAT); 
     outputImage->SetNumberOfScalarComponents(1);
+#endif
 
     if (output_array != NULL) {
       if (float_array_allocated) {
@@ -204,7 +206,11 @@ void vtkImagePropagateDist2::InitParam( vtkImageData* input, vtkImageData* outpu
       outputImage->GetPointData()->SetScalars(float_array);
     } 
     else {
+#if (VTK_MAJOR_VERSION <= 5)
       outputImage->AllocateScalars();
+#else
+      outputImage->AllocateScalars(VTK_FLOAT, 1);
+#endif
     }
 
     //    outputImage->CopyAndCastFrom(this->inputImage,
@@ -1888,13 +1894,17 @@ void vtkImagePropagateDist2::SaveTrajectories2D( int num)
     l++;
       }
   
-  copyImage->SetScalarType( VTK_FLOAT);
-  copyImage->SetNumberOfScalarComponents(1);
   copyImage->SetDimensions( outputImage->GetDimensions());
   copyImage->SetOrigin(     outputImage->GetOrigin());
   copyImage->SetSpacing(    outputImage->GetSpacing());
   
+#if (VTK_MAJOR_VERSION <= 5)
+  copyImage->SetScalarType( VTK_FLOAT);
+  copyImage->SetNumberOfScalarComponents(1);
   copyImage->AllocateScalars();
+#else
+   copyImage->AllocateScalars(VTK_FLOAT, 1);
+#endif
   //     copyImage->CopyAndCastFrom(outputImage,
   //                outputImage->GetExtent());
 
@@ -1978,14 +1988,18 @@ void vtkImagePropagateDist2::SaveTrajectories3D( int num)
         ((k<0)?nz[l]=-1:((k>0)?nz[l]=1:nz[l]=0));
     l++;
       }
-  
-  copyImage->SetScalarType( VTK_FLOAT);
-  copyImage->SetNumberOfScalarComponents(1);
+
   copyImage->SetDimensions( outputImage->GetDimensions());
   copyImage->SetOrigin(     outputImage->GetOrigin());
   copyImage->SetSpacing(    outputImage->GetSpacing());
   
+#if (VTK_MAJOR_VERSION <= 5)
+  copyImage->SetScalarType( VTK_FLOAT);
+  copyImage->SetNumberOfScalarComponents(1);
   copyImage->AllocateScalars();
+#else
+   copyImage->AllocateScalars(VTK_FLOAT, 1);
+#endif
   //     copyImage->CopyAndCastFrom(outputImage,
   //                outputImage->GetExtent());
 
@@ -2078,26 +2092,38 @@ void vtkImagePropagateDist2::SaveProjection( int num)
   int  i;
   
   
-  copyImageX->SetScalarType( VTK_FLOAT);
-  copyImageX->SetNumberOfScalarComponents(1);
   copyImageX->SetDimensions( outputImage->GetDimensions());
   copyImageX->SetOrigin(     outputImage->GetOrigin());
   copyImageX->SetSpacing(    outputImage->GetSpacing());
+#if (VTK_MAJOR_VERSION <= 5)
+  copyImageX->SetScalarType( VTK_FLOAT);
+  copyImageX->SetNumberOfScalarComponents(1);
   copyImageX->AllocateScalars();
+#else
+   copyImageX->AllocateScalars(VTK_FLOAT, 1);
+#endif
 
-  copyImageY->SetScalarType( VTK_FLOAT);
-  copyImageY->SetNumberOfScalarComponents(1);
   copyImageY->SetDimensions( outputImage->GetDimensions());
   copyImageY->SetOrigin(     outputImage->GetOrigin());
   copyImageY->SetSpacing(    outputImage->GetSpacing());
+#if (VTK_MAJOR_VERSION <= 5)
+  copyImageY->SetScalarType( VTK_FLOAT);
+  copyImageY->SetNumberOfScalarComponents(1);
   copyImageY->AllocateScalars();
+#else
+   copyImageY->AllocateScalars(VTK_FLOAT, 1);
+#endif
 
-  copyImageZ->SetScalarType( VTK_FLOAT);
-  copyImageZ->SetNumberOfScalarComponents(1);
   copyImageZ->SetDimensions( outputImage->GetDimensions());
   copyImageZ->SetOrigin(     outputImage->GetOrigin());
   copyImageZ->SetSpacing(    outputImage->GetSpacing());
+#if (VTK_MAJOR_VERSION <= 5)
+  copyImageZ->SetScalarType( VTK_FLOAT);
+  copyImageZ->SetNumberOfScalarComponents(1);
   copyImageZ->AllocateScalars();
+#else
+   copyImageZ->AllocateScalars(VTK_FLOAT, 1);
+#endif
 
 
   ptrX = (float*) copyImageX->GetScalarPointer();
@@ -2168,14 +2194,18 @@ void vtkImagePropagateDist2::SaveState( int num)
   vtkImageData* copyImage = vtkImageData::New();
   unsigned char* ptr;
   char name[255];
-  
-  copyImage->SetScalarType( VTK_UNSIGNED_CHAR);
-  copyImage->SetNumberOfScalarComponents(1);
+
   copyImage->SetDimensions( outputImage->GetDimensions());
   copyImage->SetOrigin(     outputImage->GetOrigin());
   copyImage->SetSpacing(    outputImage->GetSpacing());
   
+#if (VTK_MAJOR_VERSION <= 5)
+  copyImage->SetScalarType( VTK_UNSIGNED_CHAR);
+  copyImage->SetNumberOfScalarComponents(1);
   copyImage->AllocateScalars();
+#else
+   copyImage->AllocateScalars(VTK_UNSIGNED_CHAR, 1);
+#endif
   //     copyImage->CopyAndCastFrom(outputImage,
   //                outputImage->GetExtent());
 
@@ -2218,14 +2248,18 @@ void vtkImagePropagateDist2::SaveSkeleton( int num)
   char name[255];
   int  i;
   
-  
-  copyImage->SetScalarType( VTK_UNSIGNED_CHAR);
-  copyImage->SetNumberOfScalarComponents(1);
+
   copyImage->SetDimensions( outputImage->GetDimensions());
   copyImage->SetOrigin(     outputImage->GetOrigin());
   copyImage->SetSpacing(    outputImage->GetSpacing());
   
+#if (VTK_MAJOR_VERSION <= 5)
+  copyImage->SetScalarType( VTK_UNSIGNED_CHAR);
+  copyImage->SetNumberOfScalarComponents(1);
   copyImage->AllocateScalars();
+#else
+   copyImage->AllocateScalars(VTK_UNSIGNED_CHAR, 1);
+#endif
   //     copyImage->CopyAndCastFrom(outputImage,
   //                outputImage->GetExtent());
 
@@ -2269,14 +2303,18 @@ void vtkImagePropagateDist2::SaveDistance( int num)
     float* buf;
 
     buf    = (float*) outputImage ->GetScalarPointer();
-    
-    copyImage->SetScalarType( VTK_FLOAT);
-    copyImage->SetNumberOfScalarComponents(1);
+
     copyImage->SetDimensions( outputImage->GetDimensions());
     copyImage->SetOrigin(     outputImage->GetOrigin());
     copyImage->SetSpacing(    outputImage->GetSpacing());
     
+#if (VTK_MAJOR_VERSION <= 5)
+    copyImage->SetScalarType( VTK_FLOAT);
+    copyImage->SetNumberOfScalarComponents(1);
     copyImage->AllocateScalars();
+#else
+    copyImage->AllocateScalars(VTK_FLOAT, 1);
+#endif
     //     copyImage->CopyAndCastFrom(outputImage,
     //                outputImage->GetExtent());
     

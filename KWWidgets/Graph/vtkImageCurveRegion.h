@@ -47,7 +47,7 @@ class VTK_EMSEGMENT_EXPORT vtkImageCurveRegion : public vtkImageAlgorithm
 {
 public:
   static vtkImageCurveRegion *New();
-  vtkTypeRevisionMacro(vtkImageCurveRegion,vtkImageAlgorithm);
+  vtkTypeMacro(vtkImageCurveRegion,vtkImageAlgorithm);
   void PrintSelf(ostream& os, vtkIndent indent);
 
 void SetDimension(int value);

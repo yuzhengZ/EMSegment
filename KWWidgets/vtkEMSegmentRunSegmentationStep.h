@@ -33,7 +33,7 @@ class VTK_EMSEGMENT_EXPORT vtkEMSegmentRunSegmentationStep : public vtkEMSegment
 {
 public:
   static vtkEMSegmentRunSegmentationStep *New();
-  vtkTypeRevisionMacro(vtkEMSegmentRunSegmentationStep,vtkEMSegmentStep);
+  vtkTypeMacro(vtkEMSegmentRunSegmentationStep,vtkEMSegmentStep);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description:

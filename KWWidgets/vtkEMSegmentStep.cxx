@@ -18,7 +18,6 @@
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkEMSegmentStep);
-vtkCxxRevisionMacro(vtkEMSegmentStep, "$Revision: 1.2 $");
 vtkCxxSetObjectMacro(vtkEMSegmentStep,GUI,vtkEMSegmentGUI);
 
 //----------------------------------------------------------------------------

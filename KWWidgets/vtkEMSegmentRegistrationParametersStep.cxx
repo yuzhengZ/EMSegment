@@ -17,7 +17,6 @@
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkEMSegmentRegistrationParametersStep);
-vtkCxxRevisionMacro(vtkEMSegmentRegistrationParametersStep, "$Revision: 1.1 $");
 
 //----------------------------------------------------------------------------
 vtkEMSegmentRegistrationParametersStep::vtkEMSegmentRegistrationParametersStep()

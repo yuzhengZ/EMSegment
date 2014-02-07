@@ -18,7 +18,7 @@ class VTK_EMSEGMENT_EXPORT vtkEMSegmentInputChannelsStep : public vtkEMSegmentSt
 {
 public:
   static vtkEMSegmentInputChannelsStep *New();
-  vtkTypeRevisionMacro(vtkEMSegmentInputChannelsStep,vtkEMSegmentStep);
+  vtkTypeMacro(vtkEMSegmentInputChannelsStep,vtkEMSegmentStep);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description:

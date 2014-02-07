@@ -33,7 +33,6 @@
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkEMSegmentNodeParametersStep);
-vtkCxxRevisionMacro(vtkEMSegmentNodeParametersStep, "$Revision: 1.2 $");
 
 //----------------------------------------------------------------------------
 vtkEMSegmentNodeParametersStep::vtkEMSegmentNodeParametersStep()

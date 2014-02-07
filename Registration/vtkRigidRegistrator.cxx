@@ -23,7 +23,6 @@
 #include "vtkImagePermute.h"
 #include "itkImageFileWriter.h"
 
-vtkCxxRevisionMacro(vtkRigidRegistrator, "$Revision: 0.0 $");
 vtkStandardNewMacro(vtkRigidRegistrator);
 
 //

@@ -18,7 +18,6 @@
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkEMSegmentSpatialPriorsStep);
-vtkCxxRevisionMacro(vtkEMSegmentSpatialPriorsStep, "$Revision: 1.2 $");
 
 //----------------------------------------------------------------------------
 vtkEMSegmentSpatialPriorsStep::vtkEMSegmentSpatialPriorsStep()

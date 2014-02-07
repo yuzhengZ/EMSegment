@@ -20,7 +20,6 @@
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkEMSegmentPreProcessingStep);
-vtkCxxRevisionMacro(vtkEMSegmentPreProcessingStep, "$Revision: 1.2 $");
 
 //----------------------------------------------------------------------------
 vtkEMSegmentPreProcessingStep::vtkEMSegmentPreProcessingStep()

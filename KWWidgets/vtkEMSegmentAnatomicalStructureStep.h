@@ -21,7 +21,7 @@ class VTK_EMSEGMENT_EXPORT vtkEMSegmentAnatomicalStructureStep : public vtkEMSeg
 {
 public:
   static vtkEMSegmentAnatomicalStructureStep *New();
-  vtkTypeRevisionMacro(vtkEMSegmentAnatomicalStructureStep,vtkEMSegmentStep);
+  vtkTypeMacro(vtkEMSegmentAnatomicalStructureStep,vtkEMSegmentStep);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description:

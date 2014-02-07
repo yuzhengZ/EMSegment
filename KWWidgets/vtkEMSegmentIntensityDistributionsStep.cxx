@@ -29,7 +29,6 @@ const char* PLOT = "PlotIntensityDistribution";
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkEMSegmentIntensityDistributionsStep);
-vtkCxxRevisionMacro(vtkEMSegmentIntensityDistributionsStep, "$Revision: 1.2 $");
 
 //----------------------------------------------------------------------------
 vtkEMSegmentIntensityDistributionsStep::vtkEMSegmentIntensityDistributionsStep()

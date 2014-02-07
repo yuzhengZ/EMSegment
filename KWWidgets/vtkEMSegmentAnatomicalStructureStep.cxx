@@ -34,7 +34,6 @@
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkEMSegmentAnatomicalStructureStep);
-vtkCxxRevisionMacro(vtkEMSegmentAnatomicalStructureStep, "$Revision: 1.2 $");
 
 //----------------------------------------------------------------------------
 vtkEMSegmentAnatomicalStructureStep::vtkEMSegmentAnatomicalStructureStep()

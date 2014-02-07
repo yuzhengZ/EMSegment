@@ -16,7 +16,7 @@ class VTK_EMSEGMENT_EXPORT vtkEMSegmentIntensityDistributionsStep : public vtkEM
 {
 public:
   static vtkEMSegmentIntensityDistributionsStep *New();
-  vtkTypeRevisionMacro(vtkEMSegmentIntensityDistributionsStep,vtkEMSegmentStep);
+  vtkTypeMacro(vtkEMSegmentIntensityDistributionsStep,vtkEMSegmentStep);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description:

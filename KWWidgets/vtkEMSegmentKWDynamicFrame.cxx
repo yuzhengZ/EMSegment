@@ -12,7 +12,6 @@
 #include "vtkKWApplication.h"
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkEMSegmentKWDynamicFrame);
-vtkCxxRevisionMacro(vtkEMSegmentKWDynamicFrame, "$Revision: 1.0 $");
 
 //----------------------------------------------------------------------------
 vtkEMSegmentKWDynamicFrame::vtkEMSegmentKWDynamicFrame()

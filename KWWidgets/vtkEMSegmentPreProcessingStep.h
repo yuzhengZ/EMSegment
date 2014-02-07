@@ -8,7 +8,7 @@ class VTK_EMSEGMENT_EXPORT vtkEMSegmentPreProcessingStep : public vtkEMSegmentSt
 {
 public:
   static vtkEMSegmentPreProcessingStep *New();
-  vtkTypeRevisionMacro(vtkEMSegmentPreProcessingStep,vtkEMSegmentStep);
+  vtkTypeMacro(vtkEMSegmentPreProcessingStep,vtkEMSegmentStep);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description:

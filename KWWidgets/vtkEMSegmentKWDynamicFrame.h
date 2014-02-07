@@ -19,7 +19,7 @@ class VTK_EMSEGMENT_EXPORT vtkEMSegmentKWDynamicFrame : public vtkKWFrameWithLab
 {
 public:
   static vtkEMSegmentKWDynamicFrame *New();
-  vtkTypeRevisionMacro(vtkEMSegmentKWDynamicFrame,vtkKWFrameWithLabel);
+  vtkTypeMacro(vtkEMSegmentKWDynamicFrame,vtkKWFrameWithLabel);
 
   void DefineCheckButton(const char *label, int initState, vtkIdType ID);
   int GetCheckButtonValue(vtkIdType ID); 

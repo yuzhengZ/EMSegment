@@ -14,7 +14,7 @@ class VTK_EMSEGMENT_EXPORT vtkBSplineRegistrator :
 {
 public:
   static vtkBSplineRegistrator *New();
-  vtkTypeRevisionMacro(vtkBSplineRegistrator, vtkObject);
+  vtkTypeMacro(vtkBSplineRegistrator, vtkObject);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   //BTX

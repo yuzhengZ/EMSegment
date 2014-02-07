@@ -20,7 +20,6 @@
 #include "vtkObjectFactory.h"
 #include "vtkStreamingDemandDrivenPipeline.h"
 
-vtkCxxRevisionMacro(vtkImageCurveRegion, "1.32");
 vtkStandardNewMacro(vtkImageCurveRegion);
 
 

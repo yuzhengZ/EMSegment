@@ -49,7 +49,6 @@ MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 
 #include <math.h>
 
-vtkCxxRevisionMacro(vtkImageLabelPropagation, "$Revision: 1.1 $");
 vtkStandardNewMacro(vtkImageLabelPropagation);
 
 //----------------------------------------------------------------------------

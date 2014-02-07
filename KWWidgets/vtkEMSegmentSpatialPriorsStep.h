@@ -11,7 +11,7 @@ class VTK_EMSEGMENT_EXPORT vtkEMSegmentSpatialPriorsStep : public vtkEMSegmentSt
 {
 public:
   static vtkEMSegmentSpatialPriorsStep *New();
-  vtkTypeRevisionMacro(vtkEMSegmentSpatialPriorsStep,vtkEMSegmentStep);
+  vtkTypeMacro(vtkEMSegmentSpatialPriorsStep,vtkEMSegmentStep);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description:

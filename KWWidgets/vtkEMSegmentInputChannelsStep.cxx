@@ -23,7 +23,6 @@
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkEMSegmentInputChannelsStep);
-vtkCxxRevisionMacro(vtkEMSegmentInputChannelsStep, "$Revision: 1.1 $");
 
 //----------------------------------------------------------------------------
 vtkEMSegmentInputChannelsStep::vtkEMSegmentInputChannelsStep()

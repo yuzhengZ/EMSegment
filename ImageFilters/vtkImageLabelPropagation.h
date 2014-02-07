@@ -85,7 +85,7 @@ class  VTK_EMSEGMENT_EXPORT vtkImageLabelPropagation : public vtkImageDecomposeF
 {
 public:
   static vtkImageLabelPropagation *New();
-  vtkTypeRevisionMacro(vtkImageLabelPropagation,vtkImageDecomposeFilter);
+  vtkTypeMacro(vtkImageLabelPropagation,vtkImageDecomposeFilter);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   vtkGetMacro(Initialize, int);

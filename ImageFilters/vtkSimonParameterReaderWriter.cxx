@@ -19,7 +19,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <ctype.h>
-vtkCxxRevisionMacro(vtkSimonParameterReaderWriter, "$Revision: 1.1 $");
 vtkStandardNewMacro(vtkSimonParameterReaderWriter);
 
 

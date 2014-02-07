@@ -53,7 +53,6 @@
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkEMSegmentParametersSetStep);
-vtkCxxRevisionMacro(vtkEMSegmentParametersSetStep, "$Revision: 1.2 $");
 
 //----------------------------------------------------------------------------
 vtkEMSegmentParametersSetStep::vtkEMSegmentParametersSetStep()

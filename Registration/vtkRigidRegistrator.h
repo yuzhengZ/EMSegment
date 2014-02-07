@@ -11,7 +11,7 @@ class VTK_EMSEGMENT_EXPORT vtkRigidRegistrator :
 {
 public:
   static vtkRigidRegistrator *New();
-  vtkTypeRevisionMacro(vtkRigidRegistrator, vtkObject);
+  vtkTypeMacro(vtkRigidRegistrator, vtkObject);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   vtkSetObjectMacro(FixedImage, vtkImageData);

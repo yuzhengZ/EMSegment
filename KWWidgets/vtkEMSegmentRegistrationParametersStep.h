@@ -11,7 +11,7 @@ class VTK_EMSEGMENT_EXPORT vtkEMSegmentRegistrationParametersStep : public vtkEM
 {
 public:
   static vtkEMSegmentRegistrationParametersStep *New();
-  vtkTypeRevisionMacro(vtkEMSegmentRegistrationParametersStep,vtkEMSegmentStep);
+  vtkTypeMacro(vtkEMSegmentRegistrationParametersStep,vtkEMSegmentStep);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description:

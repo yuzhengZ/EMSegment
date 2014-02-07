@@ -56,7 +56,7 @@ ClientData vtkFastMarchingNewCommand()
   return ((ClientData)temp);
 }
 
-int vtkImageAlgorithmCppCommand(vtkImageAlgorithm *op, Tcl_Interp *interp,
+int vtkTypeMacroommand(vtkIvtkTypeMacrol_Interp *interp,
              int argc, char *argv[]);
 int VTKTCL_EXPORT vtkFastMarchingCppCommand(vtkFastMarching *op, Tcl_Interp *interp,
              int argc, char *argv[]);
@@ -99,7 +99,7 @@ int VTKTCL_EXPORT vtkFastMarchingCppCommand(vtkFastMarching *op, Tcl_Interp *int
         argv[2] = (char *)((void *)op);
         return TCL_OK;
         }
-      if (vtkImageAlgorithmCppCommand((vtkImageAlgorithm *)op,interp,argc,argv) == TCL_OK)
+      if (vtkTypeMacroommand((vtkIvtkTypeMacroterp,argc,argv) == TCL_OK)
         {
         return TCL_OK;
         }
@@ -109,7 +109,7 @@ int VTKTCL_EXPORT vtkFastMarchingCppCommand(vtkFastMarching *op, Tcl_Interp *int
 
   if (!strcmp("GetSuperClassName",argv[1]))
     {
-    Tcl_SetResult(interp,(char *) "vtkImageAlgorithm", TCL_VOLATILE);
+    Tcl_SetResult(interp,(char *) "vtkTypeMacroCL_VOLATILE);
     return TCL_OK;
     }
 
@@ -539,7 +539,7 @@ int VTKTCL_EXPORT vtkFastMarchingCppCommand(vtkFastMarching *op, Tcl_Interp *int
 
   if (!strcmp("ListMethods",argv[1]))
     {
-    vtkImageAlgorithmCppCommand(op,interp,argc,argv);
+    vtkTypeMacroommand(op,interp,argc,argv);
     Tcl_AppendResult(interp,"Methods from vtkFastMarching:\n",NULL);
     Tcl_AppendResult(interp,"  GetSuperClassName\n",NULL);
     Tcl_AppendResult(interp,"  GetClassName\n",NULL);
@@ -574,7 +574,7 @@ int VTKTCL_EXPORT vtkFastMarchingCppCommand(vtkFastMarching *op, Tcl_Interp *int
     return TCL_OK;
     }
 
-  if (vtkImageAlgorithmCppCommand((vtkImageAlgorithm *)op,interp,argc,argv) == TCL_OK)
+  if (vtkTypeMacroommand((vtkIvtkTypeMacroterp,argc,argv) == TCL_OK)
     {
     return TCL_OK;
     }

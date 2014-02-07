@@ -22,7 +22,7 @@ class VTK_EMSEGMENT_EXPORT vtkEMSegmentStep : public vtkKWWizardStep
 {
 public:
   static vtkEMSegmentStep *New();
-  vtkTypeRevisionMacro(vtkEMSegmentStep,vtkKWWizardStep);
+  vtkTypeMacro(vtkEMSegmentStep,vtkKWWizardStep);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   // Description: 

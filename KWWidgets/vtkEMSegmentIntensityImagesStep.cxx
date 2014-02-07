@@ -16,7 +16,6 @@
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkEMSegmentIntensityImagesStep);
-vtkCxxRevisionMacro(vtkEMSegmentIntensityImagesStep, "$Revision: 1.1 $");
 
 //----------------------------------------------------------------------------
 vtkEMSegmentIntensityImagesStep::vtkEMSegmentIntensityImagesStep()

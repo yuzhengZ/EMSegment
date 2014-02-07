@@ -45,7 +45,7 @@ class  VTK_EMSEGMENT_EXPORT vtkSimonParameterReaderWriter : public vtkObject
 {
 public:
   static vtkSimonParameterReaderWriter *New();
-  vtkTypeRevisionMacro(vtkSimonParameterReaderWriter,vtkObject);
+  vtkTypeMacro(vtkSimonParameterReaderWriter,vtkObject);
  
   // Need vtkImageSimonResample
   // *inA, *inB, and *out can all be the same 
